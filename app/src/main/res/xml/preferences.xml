@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.afollestad.materialdialogs.prefs.MaterialListPreference
+        android:entries="@array/theme"
+        android:entryValues="@array/theme_value"
+        android:defaultValue="Light"
+        android:key="theme"
+        android:persistent="true"
+        android:summary="@string/theme_summary"
+        android:title="@string/choose_theme" />
+
+    <com.afollestad.materialdialogs.prefs.MaterialListPreference
+        android:entries="@array/language"
+        android:entryValues="@array/language_code"
+        android:defaultValue="en"
+        android:key="language"
+        android:persistent="true"
+        android:summary="@string/change_lang_msg"
+        android:title="@string/change_lang" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="auto_update"
+        android:title="@string/auto_update"
+        android:summary="@string/auto_update_msg"/>
+
+</PreferenceScreen>

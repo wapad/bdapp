@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="aboutLibraries_description_name" translatable="false">@string/app_name</string>
+    <string name="aboutLibraries_description_showIcon" translatable="false">true</string>
+    <string name="aboutLibraries_description_showVersion" translatable="false">true</string>
+    <string name="aboutLibraries_description_text" translatable="false">
+        <![CDATA[
+         The main purpose of this app is to buy Airtel data pack with ease and convenience.
+         Unlike my previous python script, it is standalone. you can just install and
+         start buying pack. I will add support for other operators in future.
+         <br/>
+         <br/>
+         It is an open source application licensed under GPL3. You can find its source
+         code in <a href="https://github.com/QuadTriangle/BuyDataPack">Github</a>
+         <br/>
+         <h5>This app uses following open Source libraries</h5>
+        ]]>
+    </string>
+
+    <!-- Just remove those entries if you don't want to use a special button with a text within your about this app view :D -->
+    <string name="aboutLibraries_description_special1_name" translatable="false">GPL3</string>
+    <string name="aboutLibraries_description_special1_text" translatable="false"><![CDATA[
+    Copyright © 2018  Quad Triangle
+    <br/>
+    <br/>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    <br/>
+    <br/>
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    <br/>
+    <br/>
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see &lt;
+    <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.
+    ]]>
+    </string>
+    <string name="aboutLibraries_description_special2_name" translatable="false">Me</string>
+    <string name="aboutLibraries_description_special2_text" translatable="false">
+        <![CDATA[
+        <div style="text-align:center">
+        <img src="ic_avatar_me"/>
+        <br/>
+        <b>Quad Triangle</b>
+        <br/>
+        <br/>
+        <br/>
+        <a href="https://fb.com/QuadTriangle"><img src="ic_fb"/>/QuadTriangle</a>
+        <br/>
+        <br/>
+        <a href="https://t.me/QuadTriangle"><img src="ic_telegram"/>/QuadTriangle</a>
+        <br/>
+        <br/>
+        <a href="https://github.com/QuadTriangle"><img src="ic_github"/>/QuadTriangle</a>
+        </div>
+        ]]>
+    </string>
+    <string name="aboutLibraries_description_special3_name" translatable="false">Changelog</string>
+    <string name="aboutLibraries_description_special3_text" translatable="false">
+        <![CDATA[
+        <i>Version 1.0.0</i><br />
+        - initial release]]>
+    </string>
+</resources>
