@@ -34,6 +34,8 @@ public class RobiSheba {
     private final String LOGIN = "/airtel_sc/index.php?r=/accounts/login";
     private final String PACKAGES = "/airtel_sc/index.php?r=/data-packages/get-data-packages";
     private final String BUY_PACKAGE = "/airtel_sc/index.php?r=/data-packages/activate-data-package";
+    private final String AUTO_LOGIN = "/airtel_sc/index.php?r=/auto-login/check";
+    private final String AUTO_LOGIN_INFO = "http://appsuite.robi.com.bd/airtel_sc/getMsisdn.php";
 
     private RequestBody formBody;
     private JSONObject loginRespJson;
@@ -52,16 +54,32 @@ public class RobiSheba {
     }
 
     public String login(String number, String password) throws JSONException, IOException {
+        if (number == null)
+            return autoLogin();
         device_imsi = md5(number).substring(0, 16);
-        formBuilder("login", number, password, null);
-        String body = getRespBody(LOGIN);
+        formBuilder("login", number, password, null, null);
+        String body = getRespBody(BASE + LOGIN);
+        loginRespJson = new JSONObject(body);
+        return loginStatus(body, loginRespJson);
+    }
+
+    private String autoLogin() throws JSONException, IOException {
+        device_imsi = "";
+        formBuilder("getLoginInfo", null, null, null, null);
+        String body = getRespBody(AUTO_LOGIN_INFO);
+        JSONObject respJson = new JSONObject(body);
+        String id = respJson.getString("id");
+        String number = respJson.getString("msisdn");
+        device_imsi = md5(number).substring(0, 16);
+        formBuilder("autoLogin", number, null, id, null);
+        body = getRespBody(BASE + AUTO_LOGIN);
         loginRespJson = new JSONObject(body);
         return loginStatus(body, loginRespJson);
     }
 
     public List<String> getPackages() throws JSONException, IOException {
-        formBuilder("getPack", null, null, null);
-        String body = getRespBody(PACKAGES);
+        formBuilder("getPack", null, null, null, null);
+        String body = getRespBody(BASE + PACKAGES);
         packagesJson = new JSONObject(body);
         JSONArray data = packagesJson.getJSONArray("data");
         List<String> items = new ArrayList<>();
@@ -80,22 +98,22 @@ public class RobiSheba {
 
     public String buyPack(String secret) throws JSONException, IOException {
         String formType = secret != null ? "buyReqSecret" : "buyReq";
-        formBuilder(formType, null, null, secret);
-        String body = getRespBody(BUY_PACKAGE);
+        formBuilder(formType, null, null, null, secret);
+        String body = getRespBody(BASE + BUY_PACKAGE);
         return buyStatus(body);
     }
 
-    private String getRespBody(String api) throws IOException {
+    private String getRespBody(String URL) throws IOException {
         Request.Builder builder = new Request.Builder()
                 .header("Connection", "keep-alive")
-                .url(BASE + api)
+                .url(URL)
                 .post(formBody);
         Request request = builder.build();
         Response response = client.newCall(request).execute();
         return response.body().string();
     }
 
-    private void formBuilder(String formType, String number, String password,
+    private void formBuilder(String formType, String number, String password, String id,
                              String secret) throws JSONException {
         FormBody.Builder builder = new FormBody.Builder()
                 .add("app_type", "mobile_app")
@@ -106,6 +124,12 @@ public class RobiSheba {
                 builder.add("conn", number)
                         .add("password", password);
                 break;
+            case "autoLogin":
+                builder.add("conn", number)
+                        .add("id", id);
+                break;
+//            case "getLoginInfo":
+//                break;
             case "buyReqSecret":
                 builder.add("secret_code", secret);
             case "buyReq":

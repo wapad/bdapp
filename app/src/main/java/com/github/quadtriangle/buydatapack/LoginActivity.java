@@ -38,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private MaterialDialog dialog;
     private CheckBox saveLoginCheckBox;
+    private View mainLayout;
+    private View loginLayout;
 
     private SharedPreferences.Editor loginPrefsEditor;
     private OnSharedPreferenceChangeListener listener;
@@ -97,6 +99,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void setupView() {
+        mainLayout = findViewById(R.id.main_layout);
+        loginLayout = findViewById(R.id.login_layout);
         mNumberView = findViewById(R.id.number);
         mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener((textView, id, event) -> {
@@ -107,9 +111,27 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         });
         saveLoginCheckBox = findViewById(R.id.remember_me);
-        Button mSignInButton = findViewById(R.id.login);
+        Button mSignInButton = findViewById(R.id.login_btn);
         mSignInButton.setOnClickListener(view -> attemptLogin());
     }
+
+    public void onBackBtn(View view) {
+        loginLayout.setVisibility(View.GONE);
+        mainLayout.setVisibility(View.VISIBLE);
+    }
+
+    public void onLoginWithPasswordBtn(View view) {
+        mainLayout.setVisibility(View.GONE);
+        loginLayout.setVisibility(View.VISIBLE);
+    }
+
+    public void onAutoLoginBtn(View view) {
+        dialog = Common.showIndeterminateProgressDialog(context, R.string.login,
+                R.string.trying_auto_login);
+        mAuthTask = new LoginTask(null, null);
+        mAuthTask.execute((Void) null);
+    }
+
 
     private void setupRememberMe() {
         SharedPreferences loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
@@ -230,7 +252,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
     public class LoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mNumber;
@@ -250,6 +271,7 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
                 status = e.toString();
             } catch (IOException e) {
+                e.printStackTrace();
                 status = getString(R.string.connect_problem_msg);
             }
             return status.equals("success");

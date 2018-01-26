@@ -6,7 +6,7 @@
     <string name="error_field_required">This field is required</string>
     <string name="phone_number">Phone Number</string>
     <string name="password">Password</string>
-    <string name="remember_me">Remember me</string>
+    <string name="remember_me">Save number &amp; password</string>
     <string name="login">Login</string>
     <string name="settings">Settings</string>
     <string name="theme_summary">Choose application theme.</string>
@@ -46,4 +46,10 @@
     <string name="secret_sent">status: secret sent</string>
     <string name="wrong_secret">wrong secret</string>
     <string name="status_success">status: success</string>
+    <string name="trying_auto_login">Trying to use auto login system</string>
+    <string name="login_number_password">Login with Number And Password</string>
+    <string name="try_auto_login">Try Auto Login</string>
+    <string name="registation">Registation</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="back">Back</string>
 </resources>

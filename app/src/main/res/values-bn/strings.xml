@@ -45,4 +45,10 @@
     <string name="secret_sent">স্ট্যাটাসঃ secret পাঠানো হয়েছে</string>
     <string name="wrong_secret">স্ট্যাটাসঃ ভুল secret</string>
     <string name="status_success">স্ট্যাটাসঃ সফল</string>
+    <string name="trying_auto_login">অটো লগইন  সিস্টেম ব্যবহারের চেষ্টা করা হচ্ছে </string>
+    <string name="login_number_password">নাম্বার এবং পাসওয়ার্ড এর মাধ্যমে লগইন</string>
+    <string name="try_auto_login">অটো লগইন ট্রাই করুন</string>
+    <string name="registation">রেজিস্টেশন </string>
+    <string name="forgot_password">পাসওয়ার্ড ভুলে গেছেন</string>
+    <string name="back">পিছনে</string>
 </resources>
