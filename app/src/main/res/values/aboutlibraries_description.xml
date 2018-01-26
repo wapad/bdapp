@@ -63,7 +63,13 @@
     <string name="aboutLibraries_description_special3_name" translatable="false">Changelog</string>
     <string name="aboutLibraries_description_special3_text" translatable="false">
         <![CDATA[
-        <i>Version 1.0.0</i><br />
-        - initial release]]>
+        <i>Version 1.1.0</i>
+        <br/>
+        - added auto login
+        <br/>
+        <i>Version 1.0.0</i>
+        <br/>
+        - initial release
+        ]]>
     </string>
 </resources>
