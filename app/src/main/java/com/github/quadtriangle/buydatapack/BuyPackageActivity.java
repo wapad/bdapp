@@ -2,15 +2,9 @@ package com.github.quadtriangle.buydatapack;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.widget.FrameLayout;
@@ -51,11 +45,11 @@ public class BuyPackageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        setAppTheme();
+        Common.setAppTheme(this);
         setContentView(R.layout.activity_buy_package);
-        setupToolbar();
+        Common.setupToolbar(this, R.id.my_child_toolbar, true);
         setupView();
-        showPkgLoadingDialog();
+        dialog = Common.showIndeterminateProgressDialog(this, R.string.package_title, R.string.retrieving_pack);
         new SelectPackTask().execute((Void) null);
     }
 
@@ -69,66 +63,15 @@ public class BuyPackageActivity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(setAppLocale(base));
+        super.attachBaseContext(Common.setAppLocale(base));
     }
 
-    public Context setAppLocale(Context baseContext) {
-        String lang = PreferenceManager.getDefaultSharedPreferences(baseContext).getString("language", "en");
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-
-        Resources res = baseContext.getResources();
-        Configuration config = new Configuration(res.getConfiguration());
-        if (Build.VERSION.SDK_INT >= 17) {
-            config.setLocale(locale);
-            baseContext = baseContext.createConfigurationContext(config);
-        } else {
-            config.locale = locale;
-            res.updateConfiguration(config, res.getDisplayMetrics());
-        }
-
-        return baseContext;
-    }
-
-    private void setupToolbar() {
-        Toolbar myChildToolbar =
-                findViewById(R.id.my_child_toolbar);
-        setSupportActionBar(myChildToolbar);
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-    }
 
     private void setupView() {
         textView = findViewById(R.id.textView);
         textView.setMovementMethod(new ScrollingMovementMethod());
         progressBar = findViewById(R.id.progressBar6);
     }
-
-    private void setAppTheme() {
-        String selectedTheme = PreferenceManager.getDefaultSharedPreferences(context).getString("theme", "Light");
-        switch (selectedTheme) {
-            case "Light":
-                setTheme(R.style.LightTheme);
-                break;
-            case "Dark":
-                setTheme(R.style.DarkTheme);
-                break;
-            default:
-                setTheme(R.style.LightTheme);
-                break;
-        }
-    }
-
-    private void showPkgLoadingDialog() {
-        dialog = new MaterialDialog.Builder(context)
-                .title(R.string.package_title)
-                .content(R.string.retrieving_pack)
-                .cancelable(false)
-                .progress(true, 0)
-                .progressIndeterminateStyle(true)
-                .show();
-    }
-
 
     private class SelectPackTask extends AsyncTask<Void, Void, Boolean> {
         int buyTimes;
@@ -278,7 +221,7 @@ public class BuyPackageActivity extends AppCompatActivity {
                     status = e.toString();
                 }
                 textViewAppend(status);
-                if (status.equals("status: secret sent")) {
+                if (status.equals(getString(R.string.secret_sent))) {
                     textViewAppend(getString(R.string.waiting_for_sms));
                     while (secret == null) {
                         try {

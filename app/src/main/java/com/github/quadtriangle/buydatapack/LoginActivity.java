@@ -4,14 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,7 +30,6 @@ import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.Locale;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -55,11 +50,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         context = this;
         robiSheba.context = this;
-        setAppTheme();
+        Common.setAppTheme(this);
         setContentView(R.layout.activity_login);
-        setupToolbar();
-        checkUpdateStartup();
-        registerPrefsChangeListener();
+        Common.setupToolbar(this, R.id.my_toolbar, false);
+        listener = Common.registerPrefsChangeListener(this);
         setupView();
         setupRememberMe();
         SmsVerifyCatcher.isStoragePermissionGranted(this, null);
@@ -92,14 +86,15 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(setAppLocale(base));
+        super.attachBaseContext(Common.setAppLocale(base));
     }
 
-
-    private void setupToolbar() {
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+    @Override
+    protected void onStart() {
+        checkUpdateStartup();
+        super.onStart();
     }
+
 
     private void setupView() {
         mNumberView = findViewById(R.id.number);
@@ -114,7 +109,6 @@ public class LoginActivity extends AppCompatActivity {
         saveLoginCheckBox = findViewById(R.id.remember_me);
         Button mSignInButton = findViewById(R.id.login);
         mSignInButton.setOnClickListener(view -> attemptLogin());
-
     }
 
     private void setupRememberMe() {
@@ -128,26 +122,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void registerPrefsChangeListener() {
-        listener = (sharedPreferences, key) -> {
-            if (key.equals("theme") || key.equals("language")) {
-                recreate();
-            }
-        };
-
-        PreferenceManager.getDefaultSharedPreferences(this)
-                .registerOnSharedPreferenceChangeListener(listener);
-    }
-
-    private void showIndeterminateProgressDialog(String title, String content) {
-        dialog = new MaterialDialog.Builder(context)
-                .title(title)
-                .content(content)
-                .cancelable(false)
-                .progress(true, 0)
-                .progressIndeterminateStyle(true)
-                .show();
-    }
 
     private void checkUpdate(Display mode, boolean showUpdated) {
         new AppUpdater(context)
@@ -158,7 +132,6 @@ public class LoginActivity extends AppCompatActivity {
                 .setButtonDoNotShowAgain(null)
                 .setCancelable(false)
                 .start();
-
     }
 
     private void checkUpdateStartup() {
@@ -173,10 +146,10 @@ public class LoginActivity extends AppCompatActivity {
                 .withLibraries("aboutlibraries", "materialdialogs", "appupdater", "support_cardview",
                         "constraint_layout", "materialprogressbar", "okhttp", "okio", "design",
                         "support_v4", "appcompat_v7", "recyclerview_v7", "support_annotations",
-                        "fastadapter", "androidiconics")
+                        "fastadapter", "androidiconics", "smsverifycatcher")
                 .withAutoDetect(false)
                 .withLicenseShown(true)
-                .withActivityTheme(getAppTheme())
+                .withActivityTheme(Common.getAppTheme(context))
                 .withActivityTitle(getString(R.string.about))
                 .start(context);
     }
@@ -189,39 +162,6 @@ public class LoginActivity extends AppCompatActivity {
         return password.length() > 4;
     }
 
-    private void setAppTheme() {
-        setTheme(getAppTheme());
-    }
-
-    private int getAppTheme() {
-        String selectedTheme = PreferenceManager.getDefaultSharedPreferences(context).getString("theme", "Light");
-        switch (selectedTheme) {
-            case "Light":
-                return R.style.LightTheme;
-            case "Dark":
-                return R.style.DarkTheme;
-            default:
-                return R.style.LightTheme;
-        }
-    }
-
-    public Context setAppLocale(Context baseContext) {
-        String lang = PreferenceManager.getDefaultSharedPreferences(baseContext).getString("language", "en");
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-
-        Resources res = baseContext.getResources();
-        Configuration config = new Configuration(res.getConfiguration());
-        if (Build.VERSION.SDK_INT >= 17) {
-            config.setLocale(locale);
-            baseContext = baseContext.createConfigurationContext(config);
-        } else {
-            config.locale = locale;
-            res.updateConfiguration(config, res.getDisplayMetrics());
-        }
-
-        return baseContext;
-    }
 
     private void attemptLogin() {
         if (mAuthTask != null) {
@@ -284,8 +224,7 @@ public class LoginActivity extends AppCompatActivity {
                 loginPrefsEditor.clear();
                 loginPrefsEditor.commit();
             }
-
-            showIndeterminateProgressDialog(getString(R.string.login), getString(R.string.trying_login));
+            dialog = Common.showIndeterminateProgressDialog(context, R.string.login, R.string.trying_login);
             mAuthTask = new LoginTask(number, password);
             mAuthTask.execute((Void) null);
         }
