@@ -51,5 +51,5 @@
     <string name="registation">রেজিস্টেশন </string>
     <string name="forgot_password">পাসওয়ার্ড ভুলে গেছেন</string>
     <string name="back">পিছনে</string>
-    <string name="auto_login_failed_msg">অটো লগইন ব্যবহার করতে, Airtel সিম এ ডাটা চালু করুন।\nঅন্যথায়, নাম্বার এবং পাসওয়ার্ড ব্যবহার করে লগইন করুন।</string>
+    <string name="auto_login_failed_msg">অটো লগইন ব্যর্থ।\nঅনুগ্রহ করে, নাম্বার এবং পাসওয়ার্ড ব্যবহার করে লগইন করুন।</string>
 </resources>

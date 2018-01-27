@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
     private void setupRememberMe() {
         SharedPreferences loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         loginPrefsEditor = loginPreferences.edit();
-        Boolean saveLogin = loginPreferences.getBoolean("saveLogin", false);
+        Boolean saveLogin = loginPreferences.getBoolean("saveLogin", true);
         if (saveLogin) {
             mNumberView.setText(loginPreferences.getString("username", ""));
             mPasswordView.setText(loginPreferences.getString("password", ""));
