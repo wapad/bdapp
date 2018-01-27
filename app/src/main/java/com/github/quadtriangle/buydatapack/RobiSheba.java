@@ -2,6 +2,7 @@ package com.github.quadtriangle.buydatapack;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,6 +69,9 @@ public class RobiSheba {
         formBuilder("getLoginInfo", null, null, null, null);
         String body = getRespBody(AUTO_LOGIN_INFO);
         JSONObject respJson = new JSONObject(body);
+        if (!respJson.getBoolean("success")) {
+            return context.getString(R.string.auto_login_failed_msg);
+        }
         String id = respJson.getString("id");
         String number = respJson.getString("msisdn");
         device_imsi = md5(number).substring(0, 16);
@@ -110,6 +114,7 @@ public class RobiSheba {
                 .post(formBody);
         Request request = builder.build();
         Response response = client.newCall(request).execute();
+        Log.d("buydatapack", response.body().string());
         return response.body().string();
     }
 
@@ -128,8 +133,8 @@ public class RobiSheba {
                 builder.add("conn", number)
                         .add("id", id);
                 break;
-//            case "getLoginInfo":
-//                break;
+            case "getLoginInfo":
+                break;
             case "buyReqSecret":
                 builder.add("secret_code", secret);
             case "buyReq":

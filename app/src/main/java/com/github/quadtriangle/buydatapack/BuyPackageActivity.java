@@ -221,26 +221,27 @@ public class BuyPackageActivity extends AppCompatActivity {
                     status = e.toString();
                 }
                 textViewAppend(status);
-                if (status.equals(getString(R.string.secret_sent))) {
-                    textViewAppend(getString(R.string.waiting_for_sms));
-                    while (secret == null) {
-                        try {
-                            sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    textViewAppend(getString(R.string.requesting_to_buy));
-                    try {
-                        status = robiSheba.buyPack(secret);
-                    } catch (JSONException | IOException e) {
-                        e.printStackTrace();
-                        status = e.toString();
-                    }
-                    textViewAppend(status);
-                    progressBar.setProgress(i);
-                    buyPackDialog.incrementProgress(1);
+                if (!status.equals(getString(R.string.secret_sent))) {
+                    continue;
                 }
+                textViewAppend(getString(R.string.waiting_for_sms));
+                while (secret == null) {
+                    try {
+                        sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                textViewAppend(getString(R.string.requesting_to_buy));
+                try {
+                    status = robiSheba.buyPack(secret);
+                } catch (JSONException | IOException e) {
+                    e.printStackTrace();
+                    status = e.toString();
+                }
+                textViewAppend(status);
+                progressBar.setProgress(i);
+                buyPackDialog.incrementProgress(1);
             }
         }
 
