@@ -114,8 +114,9 @@ public class RobiSheba {
                 .post(formBody);
         Request request = builder.build();
         Response response = client.newCall(request).execute();
-        Log.d("buydatapack", response.body().string());
-        return response.body().string();
+        String body = response.body().string();
+        Log.d("buydatapack", body);
+        return body;
     }
 
     private void formBuilder(String formType, String number, String password, String id,
