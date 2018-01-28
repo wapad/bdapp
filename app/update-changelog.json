@@ -1,8 +1,8 @@
 {
-  "latestVersion": "1.1.0",
-  "latestVersionCode": "110",
-  "url": "https://github.com/QuadTriangle/BuyDataPack/releases/latest",
+  "latestVersion": "1.1.1",
+  "latestVersionCode": "111",
+  "url": "https://github.com/QuadTriangle/BuyDataPack/releases/download/v1.1.1/BuyDataPack-v1.1.1.apk",
   "releaseNotes": [
-    "- added auto login"
+    "- fix auto login"
   ]
 }

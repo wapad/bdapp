@@ -7,8 +7,8 @@ android {
         applicationId "com.github.quadtriangle.buydatapack"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 110
-        versionName "1.1.0"
+        versionCode 111
+        versionName "1.1.1"
         vectorDrawables.useSupportLibrary = true
     }
 
