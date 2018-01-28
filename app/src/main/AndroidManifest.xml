@@ -23,11 +23,23 @@
         <activity
             android:name=".BuyPackageActivity"
             android:parentActivityName=".LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+
+            <!-- Parent activity meta-data to support api 14 and 15 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoginActivity" />
+        </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/settings"
-            android:parentActivityName=".LoginActivity" />
+            android:parentActivityName=".LoginActivity" >
+
+            <!-- Parent activity meta-data to support api 14 and 15 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoginActivity" />
+        </activity>
 
     </application>
 
