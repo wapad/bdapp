@@ -101,21 +101,23 @@ public class BuyPackageActivity extends AppCompatActivity {
         }
 
         private void selectPack() {
-
-            new MaterialDialog.Builder(context)
+            MaterialDialog  slectPackDialog = new MaterialDialog.Builder(context)
                     .title(R.string.select_pack)
                     .items(items)
                     .cancelable(false)
                     .alwaysCallSingleChoiceCallback()
                     .itemsCallbackSingleChoice(0, (dialog, view, which, text) -> {
-                        packIndex = which;
-                        robiSheba.dataPlan = items.get(which).split("\\s-\\s")[0];
                         Toast.makeText(context, text.toString(), Toast.LENGTH_SHORT).show();
                         return true;
                     })
-                    .positiveText(R.string.ok)
-                    .onPositive((dialog, which) -> get_buy_times())
                     .show();
+            slectPackDialog.setActionButton(DialogAction.POSITIVE, R.string.ok);
+            slectPackDialog.getActionButton(DialogAction.POSITIVE).setOnClickListener((I) -> {
+                packIndex = slectPackDialog.getSelectedIndex();
+                robiSheba.dataPlan = items.get(packIndex).split("\\s-\\s")[0];
+                slectPackDialog.dismiss();
+                get_buy_times();
+            });
         }
 
         private void get_buy_times() {
