@@ -110,6 +110,8 @@ public class BuyPackageActivity extends AppCompatActivity {
                         Toast.makeText(context, text.toString(), Toast.LENGTH_SHORT).show();
                         return true;
                     })
+                    .negativeText(R.string.cancel)
+                    .onNegative((dialog, which) -> finish())
                     .show();
             slectPackDialog.setActionButton(DialogAction.POSITIVE, R.string.ok);
             slectPackDialog.getActionButton(DialogAction.POSITIVE).setOnClickListener((I) -> {
@@ -140,6 +142,8 @@ public class BuyPackageActivity extends AppCompatActivity {
                         buyTimes = picker.getValue();
                         confirmBuy();
                     })
+                    .negativeText(R.string.cancel)
+                    .onNegative((dialog, which) -> finish())
                     .show();
         }
 
