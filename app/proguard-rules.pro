@@ -29,3 +29,4 @@
 -dontwarn org.apache.http.**
 -keep class android.net.http.** { *; }
 -dontwarn android.net.http.**
+-keepattributes SourceFile,LineNumberTable
