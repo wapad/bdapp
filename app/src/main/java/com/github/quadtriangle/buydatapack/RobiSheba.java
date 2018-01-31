@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
@@ -47,6 +48,9 @@ public class RobiSheba {
     private static final RobiSheba instance = new RobiSheba();
     private OkHttpClient client = new OkHttpClient.Builder()
             .cookieJar(new NonPersistentCookieJar())
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
             .build();
     ;
 
