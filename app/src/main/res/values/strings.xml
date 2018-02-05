@@ -58,4 +58,5 @@
     <string name="back">Back</string>
     <string name="auto_login_failed_msg">Auto login failed.\nplease, login using number and password.</string>
     <string name="failed_to_buy_msg">\nFailed: waiting for 15 seconds to avoid misbehave</string>
+    <string name="buy_data_pack">Buy Data Pack</string>
 </resources>

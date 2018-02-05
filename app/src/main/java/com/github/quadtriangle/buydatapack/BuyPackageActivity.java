@@ -221,7 +221,7 @@ public class BuyPackageActivity extends AppCompatActivity {
                 smsVerifyCatcher.onStart();
                 secret = null;
                 try {
-                    status = robiSheba.buyPack(null);
+                    status = robiSheba.buyPack(context, null);
                 } catch (JSONException | IOException e) {
                     e.printStackTrace();
                     status = e.toString();
@@ -239,7 +239,7 @@ public class BuyPackageActivity extends AppCompatActivity {
                 }
                 textViewAppend(getString(R.string.requesting_to_buy));
                 try {
-                    status = robiSheba.buyPack(secret);
+                    status = robiSheba.buyPack(context, secret);
                 } catch (JSONException | IOException e) {
                     e.printStackTrace();
                     status = e.toString();

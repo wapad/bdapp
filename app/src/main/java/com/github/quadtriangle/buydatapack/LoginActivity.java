@@ -1,32 +1,20 @@
 package com.github.quadtriangle.buydatapack;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.github.javiersantos.appupdater.AppUpdater;
-import com.github.javiersantos.appupdater.enums.Display;
-import com.github.javiersantos.appupdater.enums.UpdateFrom;
-import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 
 import org.json.JSONException;
@@ -44,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
     private View mainLayout;
     private View loginLayout;
 
-    private OnSharedPreferenceChangeListener listener;
     private Context context;
     private LoginTask mAuthTask = null;
     private RobiSheba robiSheba = RobiSheba.getInstance();
@@ -55,51 +42,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setupCrashHandler();
         context = this;
-        robiSheba.context = this;
         Common.setAppTheme(this);
         setContentView(R.layout.activity_login);
-        Common.setupToolbar(this, false);
-        listener = Common.registerPrefsChangeListener(this);
+        Common.setupToolbar(this, true);
         setupView();
         SmsVerifyCatcher.isStoragePermissionGranted(this, null);
         setupCustomTabs();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                startActivity(new Intent(context, SettingsActivity.class));
-                return true;
-            case R.id.action_update:
-                Toast.makeText(context, R.string.update_msg, Toast.LENGTH_LONG).show();
-                checkUpdate(Display.DIALOG, true);
-                return true;
-            case R.id.action_about:
-                showAbout();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(Common.setAppLocale(base));
-    }
-
-    @Override
-    protected void onStart() {
-        checkUpdateStartup();
-        super.onStart();
-    }
 
     private void setupCustomTabs() {
         customTabsIntent = new CustomTabsIntent.Builder()
@@ -148,39 +98,6 @@ public class LoginActivity extends AppCompatActivity {
                 R.string.trying_auto_login);
         mAuthTask = new LoginTask(null, null);
         mAuthTask.execute((Void) null);
-    }
-
-
-
-    private void checkUpdate(Display mode, boolean showUpdated) {
-        new AppUpdater(context)
-                .setUpdateFrom(UpdateFrom.JSON)
-                .setUpdateJSON("https://raw.githubusercontent.com/quadtriangle/buydatapack/master/app/update-changelog.json")
-                .setDisplay(mode)
-                .showAppUpdated(showUpdated)
-                .setButtonDoNotShowAgain(null)
-                .setCancelable(false)
-                .start();
-    }
-
-    private void checkUpdateStartup() {
-        boolean isAutoUpdate = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("auto_update", true);
-        if (isAutoUpdate) {
-            checkUpdate(Display.NOTIFICATION, false);
-        }
-    }
-
-    private void showAbout() {
-        new LibsBuilder()
-                .withLibraries("aboutlibraries", "materialdialogs", "appupdater", "support_cardview",
-                        "constraint_layout", "materialprogressbar", "okhttp", "okio", "design",
-                        "support_v4", "appcompat_v7", "recyclerview_v7", "support_annotations",
-                        "fastadapter", "androidiconics", "smsverifycatcher")
-                .withAutoDetect(false)
-                .withLicenseShown(true)
-                .withActivityTheme(Common.getAppTheme(context))
-                .withActivityTitle(getString(R.string.about))
-                .start(context);
     }
 
     private boolean isNumberValid(String number) {
@@ -273,7 +190,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                status = robiSheba.login(mNumber, mPassword);
+                status = robiSheba.login(context, mNumber, mPassword);
             } catch (JSONException e) {
                 e.printStackTrace();
                 status = e.toString();
@@ -290,7 +207,7 @@ public class LoginActivity extends AppCompatActivity {
             dialog.dismiss();
             if (success) {
                 Toast.makeText(context, R.string.login_success, Toast.LENGTH_LONG).show();
-                startActivity(new Intent(context, BuyPackageActivity.class));
+                finish();
             } else if (status.equals("invalid")) {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

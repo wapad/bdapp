@@ -47,7 +47,7 @@ dependencies {
     implementation 'com.github.stfalcon:smsverifycatcher:0.3.1'
     implementation 'cat.ereza:customactivityoncrash:2.2.0'
     implementation 'com.android.support:customtabs:27.0.2'
-
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 
 //    configurations.all {
 //        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
