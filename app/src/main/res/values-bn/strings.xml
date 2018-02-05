@@ -38,7 +38,11 @@
     <string name="hide">লুকান</string>
     <string name="exit">বের হোন</string>
     <string name="connect_problem_msg">কানেক্টশন প্রবলেম।\n অনুগ্রহ করে, আপনার ডাটা ON আছে কিনা দেখুন।  ডাটা প্যাক কিনার জন্য এই অ্যাপটার ইন্টারনেট কানেক্টশন প্রয়োজন।\n অন্যথায়, USSD code ব্যবহার করুন।</string>
-    <string name="comfirm_msg">প্যাকঃ %s\nযতবার কিনবেনঃ %d\nমোট খরচঃ %stk</string>
+    <string name="comfirm_msg">
+        <![CDATA[
+            প্যাকঃ <b>%1$s</b><br/>যতবার কিনবেনঃ <b>%2$d</b><br/>মোট খরচঃ <b>%3$sTK</b>
+        ]]>
+    </string>
     <string name="trying_to_buy">\n\n%d তম প্যাকটি কিনার জন্য চেষ্টা করা হচ্ছে\n</string>
     <string name="waiting_for_sms">\nSMS এর জন্য অপেক্ষা করা হচ্ছে…\n</string>
     <string name="requesting_to_buy">secret পাওয়া গেছে: প্যাকটি কিনার জন্য অনুরোধ করা হচ্ছে\n</string>

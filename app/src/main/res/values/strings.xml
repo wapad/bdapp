@@ -39,7 +39,11 @@
     <string name="hide">Hide</string>
     <string name="exit">EXIT</string>
     <string name="connect_problem_msg">Connection problem.\nPlease, check that your data connection is ON. This app requires working internet connection to buy data pack.\nOtherwise, use USSD code.</string>
-    <string name="comfirm_msg">Pack: %s\nBuy times: %d\nTotal cost: %stk</string>
+    <string name="comfirm_msg">
+        <![CDATA[
+            Pack: <b>%1$s</b><br/>Buy times: <b>%2$d</b><br/>Total cost: <b>%3$sTK</b>
+        ]]>
+    </string>
     <string name="trying_to_buy">\n\ntrying to buy pack no. %d\n</string>
     <string name="waiting_for_sms">\nwaiting for SMS…\n</string>
     <string name="requesting_to_buy">secret found: requesting to buy the pack\n</string>

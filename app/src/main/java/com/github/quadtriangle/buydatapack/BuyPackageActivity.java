@@ -101,7 +101,7 @@ public class BuyPackageActivity extends AppCompatActivity {
         }
 
         private void selectPack() {
-            MaterialDialog  slectPackDialog = new MaterialDialog.Builder(context)
+            MaterialDialog slectPackDialog = new MaterialDialog.Builder(context)
                     .title(R.string.select_pack)
                     .items(items)
                     .cancelable(false)
@@ -152,7 +152,7 @@ public class BuyPackageActivity extends AppCompatActivity {
             String totalCost = String.format(Locale.ENGLISH, "%.2f", (Double.parseDouble(cost) * buyTimes));
             new MaterialDialog.Builder(context)
                     .title(R.string.confirm_pkg)
-                    .content(String.format(getString(R.string.comfirm_msg), robiSheba.dataPlan, buyTimes, totalCost))
+                    .content(R.string.comfirm_msg, robiSheba.dataPlan, buyTimes, totalCost)
                     .cancelable(false)
                     .positiveText(R.string.ok)
                     .onPositive((dialog, which) -> {
