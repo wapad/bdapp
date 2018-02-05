@@ -25,7 +25,7 @@
             android:parentActivityName=".LoginActivity"
             android:screenOrientation="portrait" >
 
-            <!-- Parent activity meta-data to support api 14 and 15 -->
+            <!-- Parent activity meta-data to support api 15 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LoginActivity" />
@@ -35,7 +35,7 @@
             android:label="@string/settings"
             android:parentActivityName=".LoginActivity" >
 
-            <!-- Parent activity meta-data to support api 14 and 15 -->
+            <!-- Parent activity meta-data to support api 15 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LoginActivity" />

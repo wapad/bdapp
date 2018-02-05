@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -48,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     private Context context;
     private LoginTask mAuthTask = null;
     private RobiSheba robiSheba = RobiSheba.getInstance();
+    private CustomTabsIntent customTabsIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         setupView();
         setupRememberMe();
         SmsVerifyCatcher.isStoragePermissionGranted(this, null);
+        setupCustomTabs();
     }
 
     @Override
@@ -98,6 +102,15 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         checkUpdateStartup();
         super.onStart();
+    }
+
+    private void setupCustomTabs() {
+        customTabsIntent = new CustomTabsIntent.Builder()
+                .addDefaultShareMenuItem()
+                .setToolbarColor(this.getResources()
+                        .getColor(R.color.colorPrimary))
+                .setShowTitle(true)
+                .build();
     }
 
     private void setupCrashHandler() {
@@ -259,6 +272,16 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask = new LoginTask(number, password);
             mAuthTask.execute((Void) null);
         }
+    }
+
+    public void onForgotPassBtn(View view) {
+        String url = "https://ecare.robi.com.bd/myairtel/faces/pages/forgetUnPass/forgetPassContainer.jspx";
+        customTabsIntent.launchUrl(this, Uri.parse(url));
+    }
+
+    public void onRegistaionBtn(View view) {
+        String url = "https://ecare.robi.com.bd/selfcare/faces/register1";
+        customTabsIntent.launchUrl(this, Uri.parse(url));
     }
 
     public class LoginTask extends AsyncTask<Void, Void, Boolean> {
