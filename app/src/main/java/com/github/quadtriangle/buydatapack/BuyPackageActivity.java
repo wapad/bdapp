@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.lang.Thread.sleep;
+import java.lang.Thread;
 
 
 public class BuyPackageActivity extends AppCompatActivity {
@@ -228,15 +228,14 @@ public class BuyPackageActivity extends AppCompatActivity {
                 }
                 textViewAppend(status);
                 if (!status.equals(getString(R.string.secret_sent))) {
+                    smsVerifyCatcher.onStop();
+                    textViewAppend(getString(R.string.failed_to_buy_msg));
+                    sleep(15_000);
                     continue;
                 }
                 textViewAppend(getString(R.string.waiting_for_sms));
                 while (secret == null) {
-                    try {
-                        sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    sleep(500);
                 }
                 textViewAppend(getString(R.string.requesting_to_buy));
                 try {
@@ -246,6 +245,11 @@ public class BuyPackageActivity extends AppCompatActivity {
                     status = e.toString();
                 }
                 textViewAppend(status);
+                if (!status.equals(getString(R.string.status_success))) {
+                    textViewAppend(getString(R.string.failed_to_buy_msg));
+                    sleep(15_000);
+                    continue;
+                }
                 progressBar.setProgress(i);
                 buyPackDialog.incrementProgress(1);
             }
@@ -264,6 +268,14 @@ public class BuyPackageActivity extends AppCompatActivity {
                     .positiveText(R.string.hide)
                     .onPositive((dialog, which) -> buyPackDialog.dismiss())
                     .show());
+        }
+
+        private void sleep(int millis) {
+            try {
+                Thread.sleep(millis);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

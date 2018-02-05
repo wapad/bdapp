@@ -44,7 +44,7 @@
     <string name="waiting_for_sms">\nwaiting for SMS…\n</string>
     <string name="requesting_to_buy">secret found: requesting to buy the pack\n</string>
     <string name="secret_sent">status: secret sent</string>
-    <string name="wrong_secret">wrong secret</string>
+    <string name="wrong_secret">status: wrong secret</string>
     <string name="status_success">status: success</string>
     <string name="trying_auto_login">Trying to use auto login system</string>
     <string name="login_number_password">Login with Number And Password</string>
@@ -53,4 +53,5 @@
     <string name="forgot_password">Forgot Password</string>
     <string name="back">Back</string>
     <string name="auto_login_failed_msg">Auto login failed.\nplease, login using number and password.</string>
+    <string name="failed_to_buy_msg">\nFailed: waiting for 15 seconds to avoid misbehave</string>
 </resources>
