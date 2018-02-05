@@ -47,7 +47,7 @@ public class BuyPackageActivity extends AppCompatActivity {
         context = this;
         Common.setAppTheme(this);
         setContentView(R.layout.activity_buy_package);
-        Common.setupToolbar(this, R.id.my_child_toolbar, true);
+        Common.setupToolbar(this, true);
         setupView();
         dialog = Common.showIndeterminateProgressDialog(this, R.string.package_title, R.string.retrieving_pack);
         new SelectPackTask().execute((Void) null);

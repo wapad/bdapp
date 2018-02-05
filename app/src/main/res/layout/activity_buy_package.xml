@@ -6,12 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.github.quadtriangle.buydatapack.BuyPackageActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_child_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp" />
+    <include layout="@layout/toolbar" />
 
     <ProgressBar
         android:id="@+id/progressBar6"
@@ -20,7 +15,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_child_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
         android:id="@+id/textView"

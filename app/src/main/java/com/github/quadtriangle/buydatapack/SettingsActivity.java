@@ -16,7 +16,7 @@ public class SettingsActivity extends AppCompatActivity {
         Common.setAppTheme(this);
         setContentView(R.layout.preference_activity_custom);
         listener = Common.registerPrefsChangeListener(this);
-        Common.setupToolbar(this, R.id.my_settings_toolbar, true);
+        Common.setupToolbar(this, true);
         if (getFragmentManager().findFragmentById(R.id.content_frame) == null) {
             getFragmentManager()
                     .beginTransaction()

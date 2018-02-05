@@ -41,11 +41,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mNumberView;
     private EditText mPasswordView;
     private MaterialDialog dialog;
-    private CheckBox saveLoginCheckBox;
     private View mainLayout;
     private View loginLayout;
 
-    private SharedPreferences.Editor loginPrefsEditor;
     private OnSharedPreferenceChangeListener listener;
     private Context context;
     private LoginTask mAuthTask = null;
@@ -60,10 +58,9 @@ public class LoginActivity extends AppCompatActivity {
         robiSheba.context = this;
         Common.setAppTheme(this);
         setContentView(R.layout.activity_login);
-        Common.setupToolbar(this, R.id.my_toolbar, false);
+        Common.setupToolbar(this, false);
         listener = Common.registerPrefsChangeListener(this);
         setupView();
-        setupRememberMe();
         SmsVerifyCatcher.isStoragePermissionGranted(this, null);
         setupCustomTabs();
     }
@@ -132,7 +129,6 @@ public class LoginActivity extends AppCompatActivity {
             }
             return false;
         });
-        saveLoginCheckBox = findViewById(R.id.remember_me);
         Button mSignInButton = findViewById(R.id.login_btn);
         mSignInButton.setOnClickListener(view -> attemptLogin());
     }
@@ -154,17 +150,6 @@ public class LoginActivity extends AppCompatActivity {
         mAuthTask.execute((Void) null);
     }
 
-
-    private void setupRememberMe() {
-        SharedPreferences loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
-        loginPrefsEditor = loginPreferences.edit();
-        Boolean saveLogin = loginPreferences.getBoolean("saveLogin", true);
-        if (saveLogin) {
-            mNumberView.setText(loginPreferences.getString("username", ""));
-            mPasswordView.setText(loginPreferences.getString("password", ""));
-            saveLoginCheckBox.setChecked(true);
-        }
-    }
 
 
     private void checkUpdate(Display mode, boolean showUpdated) {
@@ -257,16 +242,6 @@ public class LoginActivity extends AppCompatActivity {
             } catch (NullPointerException e) {
                 e.printStackTrace();
 
-            }
-
-            if (saveLoginCheckBox.isChecked()) {
-                loginPrefsEditor.putBoolean("saveLogin", true);
-                loginPrefsEditor.putString("username", number);
-                loginPrefsEditor.putString("password", password);
-                loginPrefsEditor.commit();
-            } else {
-                loginPrefsEditor.clear();
-                loginPrefsEditor.commit();
             }
             dialog = Common.showIndeterminateProgressDialog(context, R.string.login, R.string.trying_login);
             mAuthTask = new LoginTask(number, password);

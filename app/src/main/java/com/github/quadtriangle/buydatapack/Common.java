@@ -60,8 +60,8 @@ public class Common {
         return listener;
     }
 
-    public static void setupToolbar(AppCompatActivity activity, int id, boolean showUpBtn) {
-        Toolbar myChildToolbar = activity.findViewById(id);
+    public static void setupToolbar(AppCompatActivity activity, boolean showUpBtn) {
+        Toolbar myChildToolbar = activity.findViewById(R.id.toolbar);
         activity.setSupportActionBar(myChildToolbar);
         if (showUpBtn) {
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
