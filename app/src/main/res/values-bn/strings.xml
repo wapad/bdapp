@@ -52,10 +52,14 @@
     <string name="trying_auto_login">অটো লগইন  সিস্টেম ব্যবহারের চেষ্টা করা হচ্ছে </string>
     <string name="login_number_password">নাম্বার এবং পাসওয়ার্ড এর মাধ্যমে লগইন</string>
     <string name="try_auto_login">অটো লগইন ট্রাই করুন</string>
-    <string name="registation">রেজিস্টেশন </string>
+    <string name="registration">রেজিস্টেশন </string>
     <string name="forgot_password">পাসওয়ার্ড ভুলে গেছেন</string>
     <string name="back">পিছনে</string>
     <string name="auto_login_failed_msg">অটো লগইন ব্যর্থ।\nঅনুগ্রহ করে, নাম্বার এবং পাসওয়ার্ড ব্যবহার করে লগইন করুন।</string>
     <string name="failed_to_buy_msg">\nব্যর্থঃ 15 সেকেন্ড অপেক্ষা করা হচ্ছে</string>
     <string name="buy_data_pack">ডাটা প্যাক কিনুন</string>
+    <string name="home">হোম</string>
+    <string name="menu_items">মেনু আইটেম</string>
+    <string name="logout">লগআউট</string>
+    <string name="logout_description">এই অ্যাপ থেকে লগআউট করুন</string>
 </resources>

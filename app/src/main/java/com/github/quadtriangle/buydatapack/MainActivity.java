@@ -123,8 +123,8 @@ public class MainActivity extends AppCompatActivity {
                 .withActivity(this)
                 .withTextColorRes(R.color.colorAccent)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Airtel").withEmail(loginPrefs.getString("conn", "gi")).withIcon(R.drawable.ic_user).withIdentifier(1),
-                        new ProfileSettingDrawerItem().withName("Logout").withDescription("Logout from this app").withIcon(R.drawable.ic_logout).withIdentifier(2)
+                        new ProfileDrawerItem().withName(R.string.airtel).withEmail(loginPrefs.getString("conn", "")).withIcon(R.drawable.ic_user).withIdentifier(1),
+                        new ProfileSettingDrawerItem().withName(R.string.logout).withDescription(R.string.logout_description).withIcon(R.drawable.ic_logout).withIdentifier(2)
                 )
                 .withOnAccountHeaderListener((view, profile, current) -> {
                     if (profile.getIdentifier() == 2) {
@@ -140,8 +140,8 @@ public class MainActivity extends AppCompatActivity {
                 .withToolbar(findViewById(R.id.toolbar))
                 .withAccountHeader(headerResult)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.ic_home).withIdentifier(1).withSelectable(false).withIdentifier(1),
-                        new SectionDrawerItem().withName("Menu Items"),
+                        new PrimaryDrawerItem().withName(R.string.home).withIcon(R.drawable.ic_home).withIdentifier(1).withSelectable(false).withIdentifier(1),
+                        new SectionDrawerItem().withName(R.string.menu_items),
                         new SecondaryDrawerItem().withName(R.string.about).withIcon(R.drawable.ic_about).withIdentifier(2),
                         new SecondaryDrawerItem().withName(R.string.update).withIcon(R.drawable.ic_update).withIdentifier(3),
                         new SecondaryDrawerItem().withName(R.string.settings).withIcon(R.drawable.ic_setting).withIdentifier(4)

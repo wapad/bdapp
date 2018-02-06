@@ -101,6 +101,16 @@ public class LoginActivity extends AppCompatActivity {
         mAuthTask.execute((Void) null);
     }
 
+    public void onForgotPassBtn(View view) {
+        String url = "https://ecare.robi.com.bd/myairtel/faces/pages/forgetUnPass/forgetPassContainer.jspx";
+        customTabsIntent.launchUrl(this, Uri.parse(url));
+    }
+
+    public void onRegistrationBtn(View view) {
+        String url = "https://ecare.robi.com.bd/selfcare/faces/register1";
+        customTabsIntent.launchUrl(this, Uri.parse(url));
+    }
+
     private boolean isNumberValid(String number) {
         return number.startsWith("016") && number.length() == 11;
     }
@@ -165,16 +175,6 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask = new LoginTask(number, password);
             mAuthTask.execute((Void) null);
         }
-    }
-
-    public void onForgotPassBtn(View view) {
-        String url = "https://ecare.robi.com.bd/myairtel/faces/pages/forgetUnPass/forgetPassContainer.jspx";
-        customTabsIntent.launchUrl(this, Uri.parse(url));
-    }
-
-    public void onRegistaionBtn(View view) {
-        String url = "https://ecare.robi.com.bd/selfcare/faces/register1";
-        customTabsIntent.launchUrl(this, Uri.parse(url));
     }
 
     public class LoginTask extends AsyncTask<Void, Void, Boolean> {

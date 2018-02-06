@@ -45,17 +45,17 @@
             android:layout_height="wrap_content"
             android:onClick="onLoginWithPasswordBtn"
             android:text="@string/login_number_password"
-            app:layout_constraintBottom_toTopOf="@+id/registaion_btn"
+            app:layout_constraintBottom_toTopOf="@+id/registration_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/auto_login_btn" />
 
         <Button
-            android:id="@+id/registaion_btn"
+            android:id="@+id/registration_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onRegistaionBtn"
-            android:text="@string/registation"
+            android:onClick="onRegistrationBtn"
+            android:text="@string/registration"
             app:layout_constraintBottom_toTopOf="@+id/forgot_password_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registaion_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/registration_btn" />
     </android.support.constraint.ConstraintLayout>
 
 
