@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -124,12 +123,13 @@ public class MainActivity extends AppCompatActivity {
                 .withActivity(this)
                 .withTextColorRes(R.color.colorAccent)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Airtel").withEmail(loginPrefs.getString("conn", "logged out")).withIcon(R.drawable.ic_user).withIdentifier(1),
+                        new ProfileDrawerItem().withName("Airtel").withEmail(loginPrefs.getString("conn", "gi")).withIcon(R.drawable.ic_user).withIdentifier(1),
                         new ProfileSettingDrawerItem().withName("Logout").withDescription("Logout from this app").withIcon(R.drawable.ic_logout).withIdentifier(2)
                 )
                 .withOnAccountHeaderListener((view, profile, current) -> {
                     if (profile.getIdentifier() == 2) {
-                        // TODO: implement logout
+                        loginPrefs.edit().clear().apply();
+                        recreate();
                     }
                     return false;
                 })
