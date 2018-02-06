@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +17,14 @@ import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.mikepenz.aboutlibraries.LibsBuilder;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileSettingDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         listener = Common.registerPrefsChangeListener(this);
         loginPrefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         checkLoggedIn();
+        setupDrawer();
     }
 
     @Override
@@ -106,6 +116,52 @@ public class MainActivity extends AppCompatActivity {
                 .withActivityTheme(Common.getAppTheme(context))
                 .withActivityTitle(getString(R.string.about))
                 .start(context);
+    }
+
+    private void setupDrawer() {
+
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withTextColorRes(R.color.colorAccent)
+                .addProfiles(
+                        new ProfileDrawerItem().withName("Airtel").withEmail(loginPrefs.getString("conn", "logged out")).withIcon(R.drawable.ic_user).withIdentifier(1),
+                        new ProfileSettingDrawerItem().withName("Logout").withDescription("Logout from this app").withIcon(R.drawable.ic_logout).withIdentifier(2)
+                )
+                .withOnAccountHeaderListener((view, profile, current) -> {
+                    if (profile.getIdentifier() == 2) {
+                        // TODO: implement logout
+                    }
+                    return false;
+                })
+                .build();
+
+        new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(findViewById(R.id.toolbar))
+                .withAccountHeader(headerResult)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.ic_home).withIdentifier(1).withSelectable(false).withIdentifier(1),
+                        new SectionDrawerItem().withName("Menu Items"),
+                        new SecondaryDrawerItem().withName(R.string.about).withIcon(R.drawable.ic_about).withIdentifier(2),
+                        new SecondaryDrawerItem().withName(R.string.update).withIcon(R.drawable.ic_update).withIdentifier(3),
+                        new SecondaryDrawerItem().withName(R.string.settings).withIcon(R.drawable.ic_setting).withIdentifier(4)
+                )
+                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                    if (drawerItem.getIdentifier() == 1) {
+                        // we're already in home
+                        return false;
+                    } else if (drawerItem.getIdentifier() == 2) {
+                        showAbout();
+                    } else if (drawerItem.getIdentifier() == 3) {
+                        Toast.makeText(context, R.string.update_msg, Toast.LENGTH_LONG).show();
+                        checkUpdate(Display.DIALOG, true);
+                    } else if (drawerItem.getIdentifier() == 4) {
+                        startActivity(new Intent(context, SettingsActivity.class));
+                    }
+                    return false;
+                })
+                .withShowDrawerOnFirstLaunch(true)
+                .build();
     }
 
     public void onBuyDataPackBtn(View view) {
