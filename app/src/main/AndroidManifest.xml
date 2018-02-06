@@ -24,7 +24,7 @@
         <activity
             android:name=".LoginActivity"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard">
             <!-- Parent activity meta-data to support api 15 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -34,7 +34,7 @@
         <activity
             android:name=".BuyPackageActivity"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard">
             <!-- Parent activity meta-data to support api 15 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
