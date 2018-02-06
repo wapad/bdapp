@@ -33,18 +33,25 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class RobiSheba {
     // Robi Sheba API
-    private final String BASE = "https://ecare-app.robi.com.bd";
-    private final String LOGIN = "/airtel_sc/index.php?r=/accounts/login";
-    private final String PACKAGES = "/airtel_sc/index.php?r=/data-packages/get-data-packages";
-    private final String BUY_PACKAGE = "/airtel_sc/index.php?r=/data-packages/activate-data-package";
-    private final String AUTO_LOGIN = "/airtel_sc/index.php?r=/auto-login/check";
+    private final String LOGIN = "/accounts/login";
+    private final String LOGOUT = "/accounts/logout";
+    private final String AUTO_LOGIN = "/auto-login/check";
+    private final String BALANCE = "/dashboard/get-airtel-details";
+    private final String USAGE_HISTORY = "/bill/get-usage-history";
+    private final String REWARDS = "/offer/get-available-campaigns";
+    private final String PAYMENT_HISTORY = "/bill/get-payment-history";
+    private final String PACKAGES = "/data-packages/get-data-packages";
+    private final String MY_PACKAGE = "/data-packages/my-data-packages";
+    private final String BUY_PACKAGE = "/data-packages/activate-data-package";
+    private final String VOICE_PACK = "/voice-packages/get-current-voice-package";
+    private final String BASE = "https://ecare-app.robi.com.bd/airtel_sc/index.php?r=";
     private final String AUTO_LOGIN_INFO = "http://appsuite.robi.com.bd/airtel_sc/getMsisdn.php";
 
     private RequestBody formBody;
     public String dataPlan;
     private static final RobiSheba instance = new RobiSheba();
     private SharedPreferences loginPrefs;
-    SharedPreferences.Editor loginPrefsEd;
+    private SharedPreferences.Editor loginPrefsEd;
     private OkHttpClient client;
 
     public static RobiSheba getInstance() {
@@ -125,6 +132,7 @@ public class RobiSheba {
                 .add("app_type", "mobile_app")
                 .add("network_type", "mobile")
                 .add("device_imsi", loginPrefs.getString("device_imsi", ""));
+        // (-_-)
         switch (formType) {
             case "login":
                 builder.add("conn", number)
@@ -141,6 +149,19 @@ public class RobiSheba {
             case "buyReq":
                 builder.add("plan_id", dataPlan)
                         .add("name", dataPlan);
+            case "usageInfo":
+            case "payInfo":
+                switch (formType) {
+                    case "usageInfo":
+                    case "payInfo":
+                        builder.add("startDate", "")
+                                .add("endDate", "");
+                }
+            case "myPacks":
+            case "rewards":
+            case "voicePack":
+            case "balance":
+            case "logout":
             case "getPack":
                 builder.add("session_key", loginPrefs.getString("session_key", ""))
                         .add("ref_number", loginPrefs.getString("ref_number", ""))
@@ -181,7 +202,7 @@ public class RobiSheba {
     }
 
     // https://stackoverflow.com/a/39420545
-    public static String md5(String input) {
+    private static String md5(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             BigInteger md5Data = new BigInteger(1, md.digest(input.getBytes()));
