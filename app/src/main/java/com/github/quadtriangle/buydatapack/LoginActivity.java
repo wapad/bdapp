@@ -51,6 +51,10 @@ public class LoginActivity extends AppCompatActivity {
         setupCustomTabs();
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(Common.setAppLocale(base));
+    }
 
     private void setupCustomTabs() {
         customTabsIntent = new CustomTabsIntent.Builder()
