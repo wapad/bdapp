@@ -22,13 +22,11 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private SharedPreferences loginPrefs;
     private SharedPreferences.OnSharedPreferenceChangeListener listener;
-    private RobiSheba robiSheba = RobiSheba.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        robiSheba.setupClient(this);
         Common.setAppTheme(this);
         setContentView(R.layout.activity_main);
         Common.setupToolbar(this, false);

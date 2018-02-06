@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Context context;
     private LoginTask mAuthTask = null;
-    private RobiSheba robiSheba = RobiSheba.getInstance();
+    private RobiSheba robiSheba;
     private CustomTabsIntent customTabsIntent;
 
     @Override
@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setupCrashHandler();
         context = this;
+        robiSheba = new RobiSheba(this);
         Common.setAppTheme(this);
         setContentView(R.layout.activity_login);
         Common.setupToolbar(this, true);
@@ -190,7 +191,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                status = robiSheba.login(context, mNumber, mPassword);
+                status = robiSheba.login(mNumber, mPassword);
             } catch (JSONException e) {
                 e.printStackTrace();
                 status = e.toString();

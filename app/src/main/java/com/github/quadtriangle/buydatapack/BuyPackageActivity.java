@@ -39,7 +39,7 @@ public class BuyPackageActivity extends AppCompatActivity {
     private BuyPackTask buyPackTask;
     private Activity context;
     private SmsVerifyCatcher smsVerifyCatcher;
-    private RobiSheba robiSheba = RobiSheba.getInstance();
+    private RobiSheba robiSheba;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class BuyPackageActivity extends AppCompatActivity {
         Common.setupToolbar(this, true);
         setupView();
         dialog = Common.showIndeterminateProgressDialog(this, R.string.package_title, R.string.retrieving_pack);
+        robiSheba = new RobiSheba(this);
         new SelectPackTask().execute((Void) null);
     }
 
@@ -221,7 +222,7 @@ public class BuyPackageActivity extends AppCompatActivity {
                 smsVerifyCatcher.onStart();
                 secret = null;
                 try {
-                    status = robiSheba.buyPack(context, null);
+                    status = robiSheba.buyPack(null);
                 } catch (JSONException | IOException e) {
                     e.printStackTrace();
                     status = e.toString();
@@ -239,7 +240,7 @@ public class BuyPackageActivity extends AppCompatActivity {
                 }
                 textViewAppend(getString(R.string.requesting_to_buy));
                 try {
-                    status = robiSheba.buyPack(context, secret);
+                    status = robiSheba.buyPack(secret);
                 } catch (JSONException | IOException e) {
                     e.printStackTrace();
                     status = e.toString();

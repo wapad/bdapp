@@ -49,18 +49,27 @@ public class RobiSheba {
 
     private RequestBody formBody;
     public String dataPlan;
-    private static final RobiSheba instance = new RobiSheba();
     private SharedPreferences loginPrefs;
     private SharedPreferences.Editor loginPrefsEd;
     private OkHttpClient client;
+    private Context ctx;
 
-    public static RobiSheba getInstance() {
-        return instance;
+    public RobiSheba(Context context) {
+        ctx = context;
+        loginPrefs = ctx.getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        loginPrefsEd = loginPrefs.edit();
+        client = new OkHttpClient.Builder()
+                .cookieJar(new PersistentCookieJar(
+                        new SetCookieCache(), new SharedPrefsCookiePersistor(ctx)))
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
     }
 
-    public String login(Context ctx, String number, String password) throws JSONException, IOException {
+    public String login(String number, String password) throws JSONException, IOException {
         if (number == null)
-            return autoLogin(ctx);
+            return autoLogin();
         loginPrefsEd.putString("device_imsi", md5(number).substring(0, 16)).commit();
         formBuilder("login", number, password, null, null);
         String body = getRespBody(BASE + LOGIN);
@@ -70,7 +79,7 @@ public class RobiSheba {
         return status;
     }
 
-    private String autoLogin(Context ctx) throws JSONException, IOException {
+    private String autoLogin() throws JSONException, IOException {
         formBuilder("getLoginInfo", null, null, null, null);
         String body = getRespBody(AUTO_LOGIN_INFO);
         JSONObject respJson = new JSONObject(body);
@@ -107,11 +116,11 @@ public class RobiSheba {
         return items;
     }
 
-    public String buyPack(Context ctx, String secret) throws JSONException, IOException {
+    public String buyPack(String secret) throws JSONException, IOException {
         String formType = secret != null ? "buyReqSecret" : "buyReq";
         formBuilder(formType, null, null, null, secret);
         String body = getRespBody(BASE + BUY_PACKAGE);
-        return buyStatus(ctx, body);
+        return buyStatus(body);
     }
 
     private String getRespBody(String URL) throws IOException {
@@ -189,7 +198,7 @@ public class RobiSheba {
         }
     }
 
-    private String buyStatus(Context ctx, String body) {
+    private String buyStatus(String body) {
         if (body.contains("pin_sent")) {
             return ctx.getString(R.string.secret_sent);
         } else if (body.contains("Invalid Secret")) {
@@ -226,17 +235,5 @@ public class RobiSheba {
                     .getJSONObject(0).getString("conn"));
         }
         loginPrefsEd.apply();
-    }
-
-    public void setupClient(Context ctx) {
-        loginPrefs = ctx.getSharedPreferences("loginPrefs", MODE_PRIVATE);
-        loginPrefsEd = loginPrefs.edit();
-        client = new OkHttpClient.Builder()
-                .cookieJar(new PersistentCookieJar(
-                        new SetCookieCache(), new SharedPrefsCookiePersistor(ctx)))
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .build();
     }
 }
