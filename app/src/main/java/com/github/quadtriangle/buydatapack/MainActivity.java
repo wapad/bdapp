@@ -3,15 +3,18 @@ package com.github.quadtriangle.buydatapack;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
@@ -25,9 +28,18 @@ import com.mikepenz.materialdrawer.model.ProfileSettingDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     private Context context;
+    private RobiSheba robiSheba;
+
+    private MaterialDialog dialog;
     private SharedPreferences loginPrefs;
     private SharedPreferences.OnSharedPreferenceChangeListener listener;
 
@@ -35,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        robiSheba = new RobiSheba(this);
         Common.setAppTheme(this);
         setContentView(R.layout.activity_main);
         Common.setupToolbar(this, false);
@@ -166,5 +179,137 @@ public class MainActivity extends AppCompatActivity {
 
     public void onBuyDataPackBtn(View view) {
         startActivity(new Intent(context, BuyPackageActivity.class));
+    }
+
+    public void onRewardsBtn(View view) {
+        dialog = Common.showIndeterminateProgressDialog(context, R.string.offer, R.string.getting_rewards_msg);
+        new GetBodyTask("rewards").execute((Void) null);
+    }
+
+    public void onDataBalanceBtn(View view) {
+        dialog = Common.showIndeterminateProgressDialog(context, R.string.data_balance, R.string.get_data_balance_msg);
+        new GetBodyTask("dataBalance").execute((Void) null);
+    }
+
+    public void onAccountBalanceBtn(View view) {
+        dialog = Common.showIndeterminateProgressDialog(context, R.string.ac_balance, R.string.getting_ac_balance_msg);
+        new GetBodyTask("acBalance").execute((Void) null);
+    }
+
+
+    private class GetBodyTask extends AsyncTask<Void, Void, Boolean> {
+        private JSONObject respJson;
+        private String reqType;
+        private String status;
+
+
+        public GetBodyTask(String reqType) {
+            this.reqType = reqType;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                switch (reqType) {
+                    case "rewards":
+                        respJson = robiSheba.getRewards();
+                        break;
+                    case "dataBalance":
+                        respJson = robiSheba.getDataBalance();
+                        break;
+                    case "acBalance":
+                        respJson = robiSheba.getAccountBalance();
+                        break;
+                    default:
+                        break;
+
+                }
+            } catch (JSONException | IOException e) {
+                e.printStackTrace();
+                status = e.toString();
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            dialog.dismiss();
+            try {
+                if (success && respJson.getBoolean("success")) {
+                    switch (reqType) {
+                        case "rewards":
+                            showRewards();
+                            break;
+                        case "dataBalance":
+                            showDataBalance();
+                            break;
+                        case "acBalance":
+                            showAcBalance();
+                            break;
+                        default:
+                            break;
+
+                    }
+                }
+            } catch (JSONException e) {
+                status = e.toString();
+                e.printStackTrace();
+            }
+            if (status != null) {
+                new MaterialDialog.Builder(context)
+                        .content(status)
+                        .cancelable(false)
+                        .positiveText(R.string.ok)
+                        .show();
+            }
+        }
+
+        private void showRewards() throws JSONException {
+            JSONArray offers = respJson.getJSONArray("offers");
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < offers.length(); i++) {
+                builder.append(offers.getJSONObject(i).getString("message"));
+                builder.append("<br/><br/>");
+            }
+            new MaterialDialog.Builder(context)
+                    .title(R.string.offer)
+                    .content(Html.fromHtml(builder.toString()))
+                    .cancelable(false)
+                    .positiveText(R.string.ok)
+                    .show();
+        }
+
+        private void showDataBalance() throws JSONException {
+            JSONArray data = respJson.getJSONArray("data");
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < data.length(); i++) {
+                builder.append(getString(R.string.pack_data_balance_msg1));
+                builder.append(data.getJSONObject(i).getString("name"));
+                builder.append(getString(R.string.remaining_data_balance_msg2));
+                builder.append(data.getJSONObject(i).getString("remaining_volume"));
+                builder.append(getString(R.string.exp_date_data_balance_msg1));
+                builder.append(data.getJSONObject(i).getString("expiry_time"));
+                builder.append("</b><br/>");
+            }
+            new MaterialDialog.Builder(context)
+                    .title(R.string.data_balance)
+                    .content(Html.fromHtml(builder.toString()))
+                    .cancelable(false)
+                    .positiveText(R.string.ok)
+                    .show();
+        }
+
+        private void showAcBalance() throws JSONException {
+            String balance = respJson.getString("balance");
+            String lrdate = respJson.getString("lrdate");
+            String lramunt = respJson.getString("lramunt");
+            new MaterialDialog.Builder(context)
+                    .title(R.string.ac_balance)
+                    .content(R.string.show_ac_balance_msg, balance, lramunt, lrdate)
+                    .cancelable(false)
+                    .positiveText(R.string.ok)
+                    .show();
+        }
     }
 }

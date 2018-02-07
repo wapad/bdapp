@@ -123,6 +123,35 @@ public class RobiSheba {
         return buyStatus(body);
     }
 
+    public JSONObject getAccountBalance() throws JSONException, IOException {
+        formBuilder("balance", null, null, null, null);
+        String body = getRespBody(BASE + BALANCE);
+        return new JSONObject(body);
+    }
+
+    public JSONObject getDataBalance() throws JSONException, IOException {
+        formBuilder("myPacks", null, null, null, null);
+        String body = getRespBody(BASE + MY_PACKAGE);
+        return new JSONObject(body);
+    }
+
+//    public JSONObject getVoicePack() throws JSONException, IOException {
+//        formBuilder("voicePack", null, null, null, null);
+//        String body = getRespBody(BASE + VOICE_PACK);
+//        return new JSONObject(body);
+//    }
+
+    public JSONObject getRewards() throws JSONException, IOException {
+        formBuilder("rewards", null, null, null, null);
+        String body = getRespBody(BASE + REWARDS);
+        return new JSONObject(body);
+    }
+
+//    public void logout() throws JSONException, IOException {
+//        formBuilder("logout", null, null, null, null);
+//        String body = getRespBody(BASE + LOGOUT);
+//    }
+
     private String getRespBody(String URL) throws IOException {
         Request.Builder builder = new Request.Builder()
                 .header("Connection", "keep-alive")
@@ -140,6 +169,7 @@ public class RobiSheba {
         FormBody.Builder builder = new FormBody.Builder()
                 .add("app_type", "mobile_app")
                 .add("network_type", "mobile")
+                .add("language", "en")
                 .add("device_imsi", loginPrefs.getString("device_imsi", ""));
         // (-_-)
         switch (formType) {

@@ -62,4 +62,18 @@
     <string name="menu_items">মেনু আইটেম</string>
     <string name="logout">লগআউট</string>
     <string name="logout_description">এই অ্যাপ থেকে লগআউট করুন</string>
+    <string name="getting_ac_balance_msg">অ্যাকাউন্ট ব্যালেন্স বের করা হচ্ছে</string>
+    <string name="get_data_balance_msg">ডাটা ব্যালেন্স বের করা হচ্ছে</string>
+    <string name="getting_rewards_msg">অফার গুলো বের করা হছে</string>
+    <string name="offer">অফার</string>
+    <string name="data_balance">ডাটা ব্যালেন্স</string>
+    <string name="ac_balance">অ্যাকাউন্ট ব্যালেন্স</string>
+    <string name="show_ac_balance_msg">
+        <![CDATA[
+            ব্যালেন্সঃ <b>%1$s</b><br/>সর্বশেষ রিচার্জঃ <b>%2$s</b><br/>সর্বশেষ রিচার্জ করার তারিখঃ <b>%3$s</b>
+        ]]>
+    </string>
+    <string name="pack_data_balance_msg1"><![CDATA[প্যাকঃ <b>]]></string>
+    <string name="remaining_data_balance_msg2"><![CDATA[</b><br/>বাকি ডাটাঃ <b>]]></string>
+    <string name="exp_date_data_balance_msg1"><![CDATA[</b><br/>মেয়াদঃ <b>]]></string>
 </resources>

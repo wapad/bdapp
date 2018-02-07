@@ -64,4 +64,18 @@
     <string name="logout">Logout</string>
     <string name="logout_description">Logout from this app</string>
     <string name="airtel" translatable="false">Airtel</string>
+    <string name="getting_ac_balance_msg">Getting account balance</string>
+    <string name="get_data_balance_msg">Getting data balance</string>
+    <string name="getting_rewards_msg">Getting available offer</string>
+    <string name="offer">Offer</string>
+    <string name="data_balance">Data Balance</string>
+    <string name="ac_balance">Account Balance</string>
+    <string name="show_ac_balance_msg">
+        <![CDATA[
+            Balance: <b>%1$s</b><br/>Last Recharge: <b>%2$s</b><br/>Last Recharge Date: <b>%3$s</b>
+        ]]>
+    </string>
+    <string name="pack_data_balance_msg1"><![CDATA[Pack: <b>]]></string>
+    <string name="remaining_data_balance_msg2"><![CDATA[</b><br/>Remaining Volume: <b>]]></string>
+    <string name="exp_date_data_balance_msg1"><![CDATA[</b><br/>Expiry Time: <b>]]></string>
 </resources>
