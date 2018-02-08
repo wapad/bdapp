@@ -76,6 +76,7 @@ public class BuyPackageActivity extends AppCompatActivity {
 
     private class SelectPackTask extends AsyncTask<Void, Void, Boolean> {
         int buyTimes;
+        String status;
         List<String> items;
 
         @Override
@@ -84,6 +85,7 @@ public class BuyPackageActivity extends AppCompatActivity {
                 items = robiSheba.getPackages();
             } catch (JSONException | IOException e) {
                 e.printStackTrace();
+                status = e.toString();
             }
             return items != null;
         }
@@ -93,6 +95,13 @@ public class BuyPackageActivity extends AppCompatActivity {
             dialog.dismiss();
             if (success) {
                 selectPack();
+            } else {
+                new MaterialDialog.Builder(context)
+                        .content(status)
+                        .cancelable(false)
+                        .positiveText(R.string.ok)
+                        .onPositive((dialog, which) -> finish())
+                        .show();
             }
         }
 
