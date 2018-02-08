@@ -313,13 +313,11 @@ public class MainActivity extends AppCompatActivity {
             JSONArray data = respJson.getJSONArray("data");
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < data.length(); i++) {
-                builder.append(getString(R.string.pack_data_balance_msg1));
-                builder.append(data.getJSONObject(i).getString("name"));
-                builder.append(getString(R.string.remaining_data_balance_msg2));
-                builder.append(data.getJSONObject(i).getString("remaining_volume"));
-                builder.append(getString(R.string.exp_date_data_balance_msg3));
-                builder.append(data.getJSONObject(i).getString("expiry_time"));
-                builder.append("</b><br/>");
+                builder.append(String.format(getString(R.string.data_balance_tmpl),
+                        data.getJSONObject(i).getString("name"),
+                        data.getJSONObject(i).getString("remaining_volume"),
+                        data.getJSONObject(i).getString("expiry_time")
+                        ));
             }
             new MaterialDialog.Builder(context)
                     .title(R.string.data_balance)

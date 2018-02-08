@@ -70,12 +70,23 @@
     <string name="ac_balance">অ্যাকাউন্ট ব্যালেন্স</string>
     <string name="show_ac_balance_msg">
         <![CDATA[
-            ব্যালেন্সঃ <b>%1$s</b><br/>সর্বশেষ রিচার্জঃ <b>%2$s</b><br/>সর্বশেষ রিচার্জ করার তারিখঃ <b>%3$s</b>
+            ব্যালেন্সঃ <b>%1$s</b>
+            <br/>
+            সর্বশেষ রিচার্জঃ <b>%2$s</b>
+            <br/>
+            সর্বশেষ রিচার্জ করার তারিখঃ <b>%3$s</b>
         ]]>
     </string>
-    <string name="pack_data_balance_msg1"><![CDATA[প্যাকঃ <b>]]></string>
-    <string name="remaining_data_balance_msg2"><![CDATA[</b><br/>বাকি ডাটাঃ <b>]]></string>
-    <string name="exp_date_data_balance_msg3"><![CDATA[</b><br/>মেয়াদঃ <b>]]></string>
+    <string name="data_balance_tmpl">
+        <![CDATA[
+            প্যাকঃ <b>%1$s</b>
+            <br/>
+            বাকি ডাটাঃ <b>%2$s</b>
+            <br/>
+            মেয়াদঃ <b>%3$s</b>
+            <br/>
+        ]]>
+    </string>
     <string name="usage_history">ব্যবহার হিস্টোরি</string>
     <string name="usage_history_msg">ব্যবহার হিস্টোরি বের করা হচ্ছে</string>
 </resources>

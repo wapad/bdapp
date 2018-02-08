@@ -72,12 +72,23 @@
     <string name="ac_balance">Account Balance</string>
     <string name="show_ac_balance_msg">
         <![CDATA[
-            Balance: <b>%1$s</b><br/>Last Recharge: <b>%2$s</b><br/>Last Recharge Date: <b>%3$s</b>
+            Balance: <b>%1$s</b>
+            <br/>
+            Last Recharge: <b>%2$s</b>
+            <br/>
+            Last Recharge Date: <b>%3$s</b>
         ]]>
     </string>
-    <string name="pack_data_balance_msg1"><![CDATA[Pack: <b>]]></string>
-    <string name="remaining_data_balance_msg2"><![CDATA[</b><br/>Remaining Volume: <b>]]></string>
-    <string name="exp_date_data_balance_msg3"><![CDATA[</b><br/>Expiry Time: <b>]]></string>
+    <string name="data_balance_tmpl">
+        <![CDATA[
+            Pack: <b>%1$s</b>
+            <br/>
+            Remaining Volume: <b>%2$s</b>
+            <br/>
+            Expiry Time: <b>%3$s</b>
+            <br/>
+        ]]>
+    </string>
     <string name="usage_history">Usage History</string>
     <string name="usage_history_msg">Getting usage history</string>
     <string name="usage_html" translatable="false">
