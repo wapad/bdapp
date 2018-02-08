@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -35,6 +36,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
+    private View mainView;
+    private View usageView;
+    private WebView usageWv;
 
     private Context context;
     private RobiSheba robiSheba;
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         robiSheba = new RobiSheba(this);
         Common.setAppTheme(this);
         setContentView(R.layout.activity_main);
+        setupView();
         Common.setupToolbar(this, false);
         listener = Common.registerPrefsChangeListener(this);
         loginPrefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
@@ -91,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         checkUpdateStartup();
         super.onStart();
+    }
+
+    private void setupView() {
+        mainView = findViewById(R.id.main_view);
+        usageView = findViewById(R.id.usage_view);
+        usageWv = findViewById(R.id.usageWv);
     }
 
     private void checkLoggedIn() {
@@ -196,6 +207,18 @@ public class MainActivity extends AppCompatActivity {
         new GetBodyTask("acBalance").execute((Void) null);
     }
 
+    public void onUsageHistoryBtn(View view) {
+        mainView.setVisibility(View.GONE);
+        usageView.setVisibility(View.VISIBLE);
+        dialog = Common.showIndeterminateProgressDialog(context, R.string.usage_history, R.string.usage_history_msg);
+        new GetBodyTask("usageInfo").execute((Void) null);
+    }
+
+    public void onUsageWvBackBtn(View view) {
+        usageView.setVisibility(View.GONE);
+        mainView.setVisibility(View.VISIBLE);
+    }
+
 
     private class GetBodyTask extends AsyncTask<Void, Void, Boolean> {
         private JSONObject respJson;
@@ -219,6 +242,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case "acBalance":
                         respJson = robiSheba.getAccountBalance();
+                        break;
+                    case "usageInfo":
+                        respJson = robiSheba.getUsageHistory();
                         break;
                     default:
                         break;
@@ -246,6 +272,9 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case "acBalance":
                             showAcBalance();
+                            break;
+                        case "usageInfo":
+                            showUsageInfo();
                             break;
                         default:
                             break;
@@ -288,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
                 builder.append(data.getJSONObject(i).getString("name"));
                 builder.append(getString(R.string.remaining_data_balance_msg2));
                 builder.append(data.getJSONObject(i).getString("remaining_volume"));
-                builder.append(getString(R.string.exp_date_data_balance_msg1));
+                builder.append(getString(R.string.exp_date_data_balance_msg3));
                 builder.append(data.getJSONObject(i).getString("expiry_time"));
                 builder.append("</b><br/>");
             }
@@ -310,6 +339,32 @@ public class MainActivity extends AppCompatActivity {
                     .cancelable(false)
                     .positiveText(R.string.ok)
                     .show();
+        }
+
+        private void showUsageInfo() throws JSONException {
+            JSONArray data = respJson.getJSONArray("data");
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < data.length(); i++) {
+                if (data.getJSONObject(i).getString("amountChanged").equals("Tk. 0")) {
+                    continue;
+                }
+                builder.append("<tr><td>");
+                builder.append(data.getJSONObject(i).getString("eventType"));
+                builder.append("</td><td>");
+                builder.append(data.getJSONObject(i).getString("callDateTime"));
+                builder.append("</td><td>");
+                builder.append(data.getJSONObject(i).getString("mode"));
+                builder.append("</td><td>");
+                builder.append(data.getJSONObject(i).getString("description"));
+                builder.append("</td><td>");
+                builder.append(data.getJSONObject(i).getString("amountChanged"));
+                builder.append("</td><td>");
+                builder.append(data.getJSONObject(i).getString("volumeDuration"));
+                builder.append("</td><td>");
+                builder.append(data.getJSONObject(i).getString("afterCallBalance"));
+                builder.append("</td></tr>");
+            }
+            usageWv.loadDataWithBaseURL(null, String.format(getString(R.string.usage_html), builder.toString()), "text/html; charset=utf-8", "UTF-8", null);
         }
     }
 }

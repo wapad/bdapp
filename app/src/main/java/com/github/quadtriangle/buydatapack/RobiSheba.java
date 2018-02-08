@@ -18,8 +18,11 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.FormBody;
@@ -152,6 +155,18 @@ public class RobiSheba {
 //        String body = getRespBody(BASE + LOGOUT);
 //    }
 
+    public JSONObject getUsageHistory() throws JSONException, IOException {
+        formBuilder("usageInfo", null, null, null, null);
+        String body = getRespBody(BASE + USAGE_HISTORY);
+        return new JSONObject(body);
+    }
+//
+//    public JSONObject getRechargeHistory() throws JSONException, IOException {
+//        formBuilder("payInfo", null, null, null, null);
+//        String body = getRespBody(BASE + PAYMENT_HISTORY);
+//        return new JSONObject(body);
+//    }
+
     private String getRespBody(String URL) throws IOException {
         Request.Builder builder = new Request.Builder()
                 .header("Connection", "keep-alive")
@@ -193,8 +208,8 @@ public class RobiSheba {
                 switch (formType) {
                     case "usageInfo":
                     case "payInfo":
-                        builder.add("startDate", "")
-                                .add("endDate", "");
+                        builder.add("startDate", String.format(Locale.ENGLISH, "%1$td-%1$tb-%1$tY", getDateMonthsAgo(3)))
+                                .add("endDate", String.format(Locale.ENGLISH, "%1$td-%1$tb-%1$tY", new Date()));
                 }
             case "myPacks":
             case "rewards":
@@ -250,6 +265,14 @@ public class RobiSheba {
             e.printStackTrace();
             return "0123456789abcdef";
         }
+    }
+
+    // https://stackoverflow.com/a/20073222
+    private Date getDateMonthsAgo(int numOfMonthsAgo) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.MONTH, -1 * numOfMonthsAgo);
+        return c.getTime();
     }
 
     private void saveLoginInfo(String status, JSONObject loginRespJson) throws JSONException {

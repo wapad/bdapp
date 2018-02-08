@@ -77,5 +77,29 @@
     </string>
     <string name="pack_data_balance_msg1"><![CDATA[Pack: <b>]]></string>
     <string name="remaining_data_balance_msg2"><![CDATA[</b><br/>Remaining Volume: <b>]]></string>
-    <string name="exp_date_data_balance_msg1"><![CDATA[</b><br/>Expiry Time: <b>]]></string>
+    <string name="exp_date_data_balance_msg3"><![CDATA[</b><br/>Expiry Time: <b>]]></string>
+    <string name="usage_history">Usage History</string>
+    <string name="usage_history_msg">Getting usage history</string>
+    <string name="usage_html" translatable="false">
+        <![CDATA[
+            <html>
+            <body>
+                <table border="1" style="border-collapse:collapse;text-align:center;">
+                <thead style="background-color:#2e7d32;">
+                  <tr>
+                     <td>Type</td>
+                     <td>Date</td>
+                     <td>Mode</td>
+                     <td>Description</td>
+                     <td>Charged</td>
+                     <td>Volume</td>
+                     <td>After Balance</td>
+                  </tr>
+                  </thead>
+                    <tbody>%1$s</tbody>
+                </table>
+            </body>
+            </html>
+        ]]>
+    </string>
 </resources>

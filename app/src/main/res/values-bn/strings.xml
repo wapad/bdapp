@@ -75,5 +75,7 @@
     </string>
     <string name="pack_data_balance_msg1"><![CDATA[প্যাকঃ <b>]]></string>
     <string name="remaining_data_balance_msg2"><![CDATA[</b><br/>বাকি ডাটাঃ <b>]]></string>
-    <string name="exp_date_data_balance_msg1"><![CDATA[</b><br/>মেয়াদঃ <b>]]></string>
+    <string name="exp_date_data_balance_msg3"><![CDATA[</b><br/>মেয়াদঃ <b>]]></string>
+    <string name="usage_history">ব্যবহার হিস্টোরি</string>
+    <string name="usage_history_msg">ব্যবহার হিস্টোরি বের করা হচ্ছে</string>
 </resources>
