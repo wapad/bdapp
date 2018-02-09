@@ -240,7 +240,7 @@ public class BuyPackageActivity extends AppCompatActivity {
                 if (!status.equals(getString(R.string.secret_sent))) {
                     smsVerifyCatcher.onStop();
                     textViewAppend(getString(R.string.failed_to_buy_msg));
-                    sleep(15_000);
+                    sleep(10_000);
                     continue;
                 }
                 textViewAppend(getString(R.string.waiting_for_sms));
@@ -257,7 +257,7 @@ public class BuyPackageActivity extends AppCompatActivity {
                 textViewAppend(status);
                 if (!status.equals(getString(R.string.status_success))) {
                     textViewAppend(getString(R.string.failed_to_buy_msg));
-                    sleep(15_000);
+                    sleep(10_000);
                     continue;
                 }
                 progressBar.setProgress(i);

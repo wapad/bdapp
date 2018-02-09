@@ -49,25 +49,20 @@ public class RobiSheba {
     private final String VOICE_PACK = "/voice-packages/get-current-voice-package";
     private final String BASE = "https://ecare-app.robi.com.bd/airtel_sc/index.php?r=";
     private final String AUTO_LOGIN_INFO = "http://appsuite.robi.com.bd/airtel_sc/getMsisdn.php";
+    private final PersistentCookieJar cookieJar;
 
     private RequestBody formBody;
     public String dataPlan;
     private SharedPreferences loginPrefs;
     private SharedPreferences.Editor loginPrefsEd;
-    private OkHttpClient client;
     private Context ctx;
 
     public RobiSheba(Context context) {
         ctx = context;
         loginPrefs = ctx.getSharedPreferences("loginPrefs", MODE_PRIVATE);
         loginPrefsEd = loginPrefs.edit();
-        client = new OkHttpClient.Builder()
-                .cookieJar(new PersistentCookieJar(
-                        new SetCookieCache(), new SharedPrefsCookiePersistor(ctx)))
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .build();
+        cookieJar =  new PersistentCookieJar(
+                new SetCookieCache(), new SharedPrefsCookiePersistor(ctx));
     }
 
     public String login(String number, String password) throws JSONException, IOException {
@@ -75,7 +70,7 @@ public class RobiSheba {
             return autoLogin();
         loginPrefsEd.putString("device_imsi", md5(number).substring(0, 16)).commit();
         formBuilder("login", number, password, null, null);
-        String body = getRespBody(BASE + LOGIN);
+        String body = getRespBody(BASE + LOGIN, 15);
         JSONObject loginRespJson = new JSONObject(body);
         String status = loginStatus(body, loginRespJson);
         saveLoginInfo(status, loginRespJson);
@@ -84,7 +79,7 @@ public class RobiSheba {
 
     private String autoLogin() throws JSONException, IOException {
         formBuilder("getLoginInfo", null, null, null, null);
-        String body = getRespBody(AUTO_LOGIN_INFO);
+        String body = getRespBody(AUTO_LOGIN_INFO, 15);
         JSONObject respJson = new JSONObject(body);
         if (!respJson.getBoolean("success")) {
             return ctx.getString(R.string.auto_login_failed_msg);
@@ -93,7 +88,7 @@ public class RobiSheba {
         String number = respJson.getString("msisdn");
         loginPrefsEd.putString("device_imsi", md5(number).substring(0, 16)).commit();
         formBuilder("autoLogin", number, null, id, null);
-        body = getRespBody(BASE + AUTO_LOGIN);
+        body = getRespBody(BASE + AUTO_LOGIN, 15);
         JSONObject loginRespJson = new JSONObject(body);
         String status = loginStatus(body, loginRespJson);
         saveLoginInfo(status, loginRespJson);
@@ -102,7 +97,7 @@ public class RobiSheba {
 
     public List<String> getPackages() throws JSONException, IOException {
         formBuilder("getPack", null, null, null, null);
-        String body = getRespBody(BASE + PACKAGES);
+        String body = getRespBody(BASE + PACKAGES, 15);
         JSONObject packagesJson = new JSONObject(body);
         JSONArray data = packagesJson.getJSONArray("data");
         List<String> items = new ArrayList<>();
@@ -122,19 +117,19 @@ public class RobiSheba {
     public String buyPack(String secret) throws JSONException, IOException {
         String formType = secret != null ? "buyReqSecret" : "buyReq";
         formBuilder(formType, null, null, null, secret);
-        String body = getRespBody(BASE + BUY_PACKAGE);
+        String body = getRespBody(BASE + BUY_PACKAGE, 15);
         return buyStatus(body);
     }
 
     public JSONObject getAccountBalance() throws JSONException, IOException {
         formBuilder("balance", null, null, null, null);
-        String body = getRespBody(BASE + BALANCE);
+        String body = getRespBody(BASE + BALANCE, 15);
         return new JSONObject(body);
     }
 
     public JSONObject getDataBalance() throws JSONException, IOException {
         formBuilder("myPacks", null, null, null, null);
-        String body = getRespBody(BASE + MY_PACKAGE);
+        String body = getRespBody(BASE + MY_PACKAGE, 15);
         return new JSONObject(body);
     }
 
@@ -146,7 +141,7 @@ public class RobiSheba {
 
     public JSONObject getRewards() throws JSONException, IOException {
         formBuilder("rewards", null, null, null, null);
-        String body = getRespBody(BASE + REWARDS);
+        String body = getRespBody(BASE + REWARDS, 15);
         return new JSONObject(body);
     }
 
@@ -157,7 +152,7 @@ public class RobiSheba {
 
     public JSONObject getUsageHistory() throws JSONException, IOException {
         formBuilder("usageInfo", null, null, null, null);
-        String body = getRespBody(BASE + USAGE_HISTORY);
+        String body = getRespBody(BASE + USAGE_HISTORY, 60);
         return new JSONObject(body);
     }
 //
@@ -167,12 +162,17 @@ public class RobiSheba {
 //        return new JSONObject(body);
 //    }
 
-    private String getRespBody(String URL) throws IOException {
-        Request.Builder builder = new Request.Builder()
-                .header("Connection", "keep-alive")
+    private String getRespBody(String URL, int readTimeOut) throws IOException {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(cookieJar)
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(readTimeOut, TimeUnit.SECONDS)
+                .build();
+        Request request = new Request.Builder()
                 .url(URL)
-                .post(formBody);
-        Request request = builder.build();
+                .post(formBody)
+                .build();
         Response response = client.newCall(request).execute();
         String body = response.body().string();
         Log.d("buydatapack", body);
@@ -208,7 +208,7 @@ public class RobiSheba {
                 switch (formType) {
                     case "usageInfo":
                     case "payInfo":
-                        builder.add("startDate", String.format(Locale.ENGLISH, "%1$td-%1$tb-%1$tY", getDateMonthsAgo(3)))
+                        builder.add("startDate", String.format(Locale.ENGLISH, "%1$td-%1$tb-%1$tY", getDateDaysAgo(10)))
                                 .add("endDate", String.format(Locale.ENGLISH, "%1$td-%1$tb-%1$tY", new Date()));
                 }
             case "myPacks":
@@ -268,10 +268,10 @@ public class RobiSheba {
     }
 
     // https://stackoverflow.com/a/20073222
-    private Date getDateMonthsAgo(int numOfMonthsAgo) {
+    public static Date getDateDaysAgo(int numOfDaysAgo) {
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
-        c.add(Calendar.MONTH, -1 * numOfMonthsAgo);
+        c.add(Calendar.DAY_OF_YEAR, -1 * numOfDaysAgo);
         return c.getTime();
     }
 

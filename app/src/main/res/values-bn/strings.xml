@@ -56,7 +56,7 @@
     <string name="forgot_password">পাসওয়ার্ড ভুলে গেছেন</string>
     <string name="back">পিছনে</string>
     <string name="auto_login_failed_msg">অটো লগইন ব্যর্থ।\nঅনুগ্রহ করে, নাম্বার এবং পাসওয়ার্ড ব্যবহার করে লগইন করুন।</string>
-    <string name="failed_to_buy_msg">\nব্যর্থঃ 15 সেকেন্ড অপেক্ষা করা হচ্ছে</string>
+    <string name="failed_to_buy_msg">\nব্যর্থঃ 10 সেকেন্ড অপেক্ষা করা হচ্ছে</string>
     <string name="buy_data_pack">ডাটা প্যাক কিনুন</string>
     <string name="home">হোম</string>
     <string name="menu_items">মেনু আইটেম</string>
