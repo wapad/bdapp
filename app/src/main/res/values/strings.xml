@@ -87,6 +87,7 @@
             <br/>
             Expiry Time: <b>%3$s</b>
             <br/>
+            <br/>
         ]]>
     </string>
     <string name="usage_history">Usage History</string>

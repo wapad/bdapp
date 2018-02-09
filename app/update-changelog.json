@@ -1,8 +1,18 @@
 {
-  "latestVersion": "1.1.1",
-  "latestVersionCode": "111",
-  "url": "https://github.com/QuadTriangle/BuyDataPack/releases/download/v1.1.1/BuyDataPack-v1.1.1.apk",
+  "latestVersion": "2.0.0",
+  "latestVersionCode": "200",
+  "url": "https://github.com/QuadTriangle/BuyDataPack/releases/download/v2.0.0/BuyDataPack-v2.0.0.apk",
   "releaseNotes": [
-    "- fix auto login"
+      "- added persisted login with local logout",
+      "- fix timeout after effects",
+      "- support android 4.0.3",
+      "- fix a crash on huawei",
+      "- added a crash handler",
+      "- added registration and forgot password links",
+      "- added a drawer",
+      "- enable rotation on buy pack activity",
+      "- added a data and account balance checker",
+      "- added offer",
+      "- added usage history"
   ]
 }

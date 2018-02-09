@@ -63,15 +63,42 @@
     <string name="aboutLibraries_description_special3_name" translatable="false">Changelog</string>
     <string name="aboutLibraries_description_special3_text" translatable="false">
         <![CDATA[
-        <i>Version 1.1.1</i>
+        <b>Version 2.0.0</b>
+        <br/>
+        - added persisted login with local logout
+        <br/>
+        - fix timeout after effects
+        <br/>
+        - support android 4.0.3
+        <br/>
+        - fix a crash on huawei
+        <br/>
+        - added a crash handler
+        <br/>
+        - added registration and forgot password links
+        <br/>
+        - added a drawer
+        <br/>
+        - enable rotation on buy pack activity
+        <br/>
+        - added a data and account balance checker
+        <br/>
+        - added offer
+        <br/>
+        - added usage history
+        <br/>
+        <br/>
+        <b>Version 1.1.1</b>
         <br/>
         - fix auto login
         <br/>
-        <i>Version 1.1.0</i>
+        <br/>
+        <b>Version 1.1.0</b>
         <br/>
         - added auto login
         <br/>
-        <i>Version 1.0.0</i>
+        <br/>
+        <b>Version 1.0.0</b>
         <br/>
         - initial release
         ]]>
