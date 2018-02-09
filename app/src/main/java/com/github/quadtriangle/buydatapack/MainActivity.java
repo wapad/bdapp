@@ -35,6 +35,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import cat.ereza.customactivityoncrash.config.CaocConfig;
+
 public class MainActivity extends AppCompatActivity {
     private View mainView;
     private View usageView;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        setupCrashHandler();
         robiSheba = new RobiSheba(this);
         Common.setAppTheme(this);
         setContentView(R.layout.activity_main);
@@ -96,6 +99,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         checkUpdateStartup();
         super.onStart();
+    }
+
+    private void setupCrashHandler() {
+        CaocConfig.Builder.create()
+                .showRestartButton(false)
+                .trackActivities(true)
+                .apply();
     }
 
     private void setupView() {

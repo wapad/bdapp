@@ -21,8 +21,6 @@ import org.json.JSONException;
 
 import java.io.IOException;
 
-import cat.ereza.customactivityoncrash.config.CaocConfig;
-
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupCrashHandler();
         context = this;
         robiSheba = new RobiSheba(this);
         Common.setAppTheme(this);
@@ -63,13 +60,6 @@ public class LoginActivity extends AppCompatActivity {
                         .getColor(R.color.colorPrimary))
                 .setShowTitle(true)
                 .build();
-    }
-
-    private void setupCrashHandler() {
-        CaocConfig.Builder.create()
-                .showRestartButton(false)
-                .trackActivities(true)
-                .apply();
     }
 
     private void setupView() {
