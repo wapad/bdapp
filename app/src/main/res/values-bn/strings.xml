@@ -90,4 +90,6 @@
     </string>
     <string name="usage_history">ব্যবহার হিস্টোরি</string>
     <string name="usage_history_msg">ব্যবহার হিস্টোরি বের করা হচ্ছে</string>
+    <string name="sms_permisssion">SMS এর অনুমতি</string>
+    <string name="sms_permission_msg">এই অ্যাপ টা ব্যবহার করতে আপনাকে অবশ্যই এসএমএস এর অনুমতি দিতে হবে। এসএমএস এর অনুমতি ছাড়া এটি অটো secret কোড বসাতে পারবে না।</string>
 </resources>

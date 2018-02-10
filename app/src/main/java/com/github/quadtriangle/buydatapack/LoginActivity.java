@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 
 import org.json.JSONException;
 
@@ -44,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Common.setupToolbar(this, true);
         setupView();
-        SmsVerifyCatcher.isStoragePermissionGranted(this, null);
         setupCustomTabs();
     }
 
@@ -231,11 +229,9 @@ public class LoginActivity extends AppCompatActivity {
                     message = status;
                     break;
             }
-
-            final String dialogMessage = message;
             new MaterialDialog.Builder(context)
                     .title(dialogTitle)
-                    .content(dialogMessage)
+                    .content(message)
                     .negativeText(R.string.ok)
                     .show();
         }

@@ -114,4 +114,6 @@
             </html>
         ]]>
     </string>
+    <string name="sms_permisssion">SMS Permission</string>
+    <string name="sms_permission_msg">You must grant SMS permission to use this app. SMS permission is required to auto fill secret codes.</string>
 </resources>

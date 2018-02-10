@@ -1,10 +1,13 @@
 package com.github.quadtriangle.buydatapack;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -28,6 +31,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileSettingDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,6 +67,23 @@ public class MainActivity extends AppCompatActivity {
         loginPrefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         checkLoggedIn();
         setupDrawer();
+        SmsVerifyCatcher.isStoragePermissionGranted(this, null);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS) &&
+                    shouldShowRequestPermissionRationale(Manifest.permission.RECEIVE_SMS)) {
+                new MaterialDialog.Builder(context)
+                        .title(R.string.sms_permisssion)
+                        .content(R.string.sms_permission_msg)
+                        .cancelable(false)
+                        .positiveText(R.string.ok)
+                        .onPositive((dialog, which) -> SmsVerifyCatcher.isStoragePermissionGranted(this, null))
+                        .show();
+            }
+        }
     }
 
     @Override
