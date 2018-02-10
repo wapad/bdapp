@@ -237,7 +237,6 @@ public class LoginActivity extends AppCompatActivity {
                     .title(dialogTitle)
                     .content(dialogMessage)
                     .negativeText(R.string.ok)
-                    .onNegative((dialog, which) -> finish())
                     .show();
         }
     }

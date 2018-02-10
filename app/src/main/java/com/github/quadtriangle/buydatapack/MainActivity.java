@@ -101,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        recreate();
+    }
+
     private void setupCrashHandler() {
         CaocConfig.Builder.create()
                 .showRestartButton(false)
@@ -116,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkLoggedIn() {
         if (!loginPrefs.getBoolean("isLoggedIn", false)) {
-            startActivity(new Intent(context, LoginActivity.class));
+            startActivityForResult(new Intent(context, LoginActivity.class), 1);
         }
     }
 
