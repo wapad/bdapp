@@ -355,6 +355,9 @@ public class MainActivity extends AppCompatActivity {
                         data.getJSONObject(i).getString("expiry_time")
                         ));
             }
+            if (data.length() == 0) {
+                builder.append(getString(R.string.no_pack_msg));
+            }
             new MaterialDialog.Builder(context)
                     .title(R.string.data_balance)
                     .content(Html.fromHtml(builder.toString()))

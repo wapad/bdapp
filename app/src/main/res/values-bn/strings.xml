@@ -55,7 +55,12 @@
     <string name="registration">রেজিস্টেশন </string>
     <string name="forgot_password">পাসওয়ার্ড ভুলে গেছেন</string>
     <string name="back">পিছনে</string>
-    <string name="auto_login_failed_msg">অটো লগইন ব্যর্থ।\nঅনুগ্রহ করে, নাম্বার এবং পাসওয়ার্ড ব্যবহার করে লগইন করুন।</string>
+    <string name="auto_login_failed_msg">অটো লগইন ব্যর্থ।
+        সম্ভাব্য কারণঃ
+        ১। এয়ারটেল সার্ভার ডাউন।
+        ২। আপনার অ্যাকাউন্ট নেই।
+        ৩। আপনি এয়ারটেল এ ডাটা চালু করেন নি।
+        অনুগ্রহ করে, নাম্বার এবং পাসওয়ার্ড ব্যবহার করে লগইন করার চেষ্টা করুন।</string>
     <string name="failed_to_buy_msg">\nব্যর্থঃ 10 সেকেন্ড অপেক্ষা করা হচ্ছে</string>
     <string name="buy_data_pack">ডাটা প্যাক কিনুন</string>
     <string name="home">হোম</string>
@@ -92,4 +97,5 @@
     <string name="usage_history_msg">ব্যবহার হিস্টোরি বের করা হচ্ছে</string>
     <string name="sms_permisssion">SMS এর অনুমতি</string>
     <string name="sms_permission_msg">এই অ্যাপ টা ব্যবহার করতে আপনাকে অবশ্যই এসএমএস এর অনুমতি দিতে হবে। এসএমএস এর অনুমতি ছাড়া এটি অটো secret কোড বসাতে পারবে না।</string>
+    <string name="no_pack_msg"><![CDATA[<i>কোনো প্যাক পাওয়া যায় নি.<i><br/><i>অনুগ্রহ করে পরে আবার চেষ্টা করুন.<i>]]></string>
 </resources>

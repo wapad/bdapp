@@ -56,7 +56,12 @@
     <string name="registration">Registration</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="back">Back</string>
-    <string name="auto_login_failed_msg">Auto login failed.\nplease, login using number and password.</string>
+    <string name="auto_login_failed_msg">Auto login failed.
+        Possible Reason:
+        1. Server temporary down.
+        2. You don\'t have an account.
+        3. You haven\'t enable data on Airtel.
+        please, try login using number and password.</string>
     <string name="failed_to_buy_msg">\nFailed: waiting for 10 seconds to avoid misbehave</string>
     <string name="buy_data_pack">Buy Data Pack</string>
     <string name="home">Home</string>
@@ -116,4 +121,5 @@
     </string>
     <string name="sms_permisssion">SMS Permission</string>
     <string name="sms_permission_msg">You must grant SMS permission to use this app. SMS permission is required to auto fill secret codes.</string>
+    <string name="no_pack_msg"><![CDATA[<i>No Pack available.<i><br/><i>Please try again later.<i>]]></string>
 </resources>
