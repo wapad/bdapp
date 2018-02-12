@@ -248,8 +248,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onUsageHistoryBtn(View view) {
-        mainView.setVisibility(View.GONE);
-        usageView.setVisibility(View.VISIBLE);
         dialog = Common.showIndeterminateProgressDialog(context, R.string.usage_history, R.string.usage_history_msg);
         new GetBodyTask("usageInfo").execute((Void) null);
     }
@@ -414,7 +412,17 @@ public class MainActivity extends AppCompatActivity {
                 builder.append(data.getJSONObject(i).getString("afterCallBalance"));
                 builder.append("</td></tr>");
             }
-            usageWv.loadDataWithBaseURL(null, String.format(getString(R.string.usage_html), builder.toString()), "text/html; charset=utf-8", "UTF-8", null);
+            if (data.length() == 0) {
+                new MaterialDialog.Builder(context)
+                        .content(R.string.no_data_msg)
+                        .cancelable(false)
+                        .positiveText(R.string.ok)
+                        .show();
+            } else {
+                mainView.setVisibility(View.GONE);
+                usageView.setVisibility(View.VISIBLE);
+                usageWv.loadDataWithBaseURL(null, String.format(getString(R.string.usage_html), builder.toString()), "text/html; charset=utf-8", "UTF-8", null);
+            }
         }
     }
 }

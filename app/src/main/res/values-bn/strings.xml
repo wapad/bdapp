@@ -96,8 +96,9 @@
     <string name="usage_history_msg">ব্যবহার হিস্টোরি বের করা হচ্ছে</string>
     <string name="sms_permisssion">SMS এর অনুমতি</string>
     <string name="sms_permission_msg">এই অ্যাপ টা ব্যবহার করতে আপনাকে অবশ্যই এসএমএস এর অনুমতি দিতে হবে। এসএমএস এর অনুমতি ছাড়া এটি অটো secret কোড বসাতে পারবে না।</string>
-    <string name="no_pack_msg"><![CDATA[<i>কোনো প্যাক পাওয়া যায় নি.<i><br/><i>অনুগ্রহ করে পরে আবার চেষ্টা করুন.<i>]]></string>
+    <string name="no_pack_msg"><![CDATA[<i>কোনো প্যাক পাওয়া যায় নি।<i><br/><i>অনুগ্রহ করে পরে আবার চেষ্টা করুন।<i>]]></string>
     <string name="connection_failed">কানেক্টশন ব্যর্থ</string>
     <string name="server_overloaded_msg">সার্ভারে ওভারলোড হয়েছে এবং রেসপন্স করতে পারছে না</string>
     <string name="auto_login_failed">অটো লগইন ব্যর্থ</string>
+    <string name="no_data_msg">সার্ভার কোনো ডাটা পাঠায় নি। অনুগ্রহ করে আবার চেষ্টা করুন।</string>
 </resources>
