@@ -38,6 +38,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
+import javax.net.ssl.SSLHandshakeException;
 
 import cat.ereza.customactivityoncrash.config.CaocConfig;
 
@@ -286,12 +290,21 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                 }
+                return true;
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+                status = getString(R.string.connect_problem_msg);
+            } catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                status = getString(R.string.server_overloaded_msg);
+            } catch (SSLHandshakeException e) {
+                e.printStackTrace();
+                status = getString(R.string.connection_failed);
             } catch (JSONException | IOException e) {
                 e.printStackTrace();
                 status = e.toString();
-                return false;
             }
-            return true;
+            return false;
         }
 
         @Override
@@ -353,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
                         data.getJSONObject(i).getString("name"),
                         data.getJSONObject(i).getString("remaining_volume"),
                         data.getJSONObject(i).getString("expiry_time")
-                        ));
+                ));
             }
             if (data.length() == 0) {
                 builder.append(getString(R.string.no_pack_msg));

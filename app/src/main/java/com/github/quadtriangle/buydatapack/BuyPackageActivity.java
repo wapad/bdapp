@@ -20,12 +20,16 @@ import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import java.lang.Thread;
+
+import javax.net.ssl.SSLHandshakeException;
 
 
 public class BuyPackageActivity extends AppCompatActivity {
@@ -83,6 +87,15 @@ public class BuyPackageActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
             try {
                 items = robiSheba.getPackages();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+                status = getString(R.string.connect_problem_msg);
+            } catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                status = getString(R.string.server_overloaded_msg);
+            } catch (SSLHandshakeException e) {
+                e.printStackTrace();
+                status = getString(R.string.connection_failed);
             } catch (JSONException | IOException e) {
                 e.printStackTrace();
                 status = e.toString();
@@ -232,6 +245,15 @@ public class BuyPackageActivity extends AppCompatActivity {
                 secret = null;
                 try {
                     status = robiSheba.buyPack(null);
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                    status = getString(R.string.connect_problem_msg);
+                } catch (SocketTimeoutException e) {
+                    e.printStackTrace();
+                    status = getString(R.string.server_overloaded_msg);
+                } catch (SSLHandshakeException e) {
+                    e.printStackTrace();
+                    status = getString(R.string.connection_failed);
                 } catch (JSONException | IOException e) {
                     e.printStackTrace();
                     status = e.toString();
@@ -250,6 +272,15 @@ public class BuyPackageActivity extends AppCompatActivity {
                 textViewAppend(getString(R.string.requesting_to_buy));
                 try {
                     status = robiSheba.buyPack(secret);
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                    status = getString(R.string.connect_problem_msg);
+                } catch (SocketTimeoutException e) {
+                    e.printStackTrace();
+                    status = getString(R.string.server_overloaded_msg);
+                } catch (SSLHandshakeException e) {
+                    e.printStackTrace();
+                    status = getString(R.string.connection_failed);
                 } catch (JSONException | IOException e) {
                     e.printStackTrace();
                     status = e.toString();
@@ -276,7 +307,6 @@ public class BuyPackageActivity extends AppCompatActivity {
                     .cancelable(false)
                     .progress(false, buyTimes, true)
                     .positiveText(R.string.hide)
-                    .onPositive((dialog, which) -> buyPackDialog.dismiss())
                     .show());
         }
 

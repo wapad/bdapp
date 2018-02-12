@@ -19,6 +19,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
+import java.net.SocketTimeoutException;
+
+import javax.net.ssl.SSLHandshakeException;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -184,12 +188,18 @@ public class LoginActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
             try {
                 status = robiSheba.login(mNumber, mPassword);
-            } catch (JSONException e) {
-                e.printStackTrace();
-                status = e.toString();
-            } catch (IOException e) {
+            } catch (UnknownHostException e) {
                 e.printStackTrace();
                 status = getString(R.string.connect_problem_msg);
+            } catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                status = getString(R.string.server_overloaded_msg);
+            } catch (SSLHandshakeException e) {
+                e.printStackTrace();
+                status = getString(R.string.connection_failed);
+            } catch (JSONException | IOException e) {
+                e.printStackTrace();
+                status = e.toString();
             }
             return status.equals("success");
         }
@@ -229,11 +239,16 @@ public class LoginActivity extends AppCompatActivity {
                     message = status;
                     break;
             }
-            new MaterialDialog.Builder(context)
+            MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
                     .title(dialogTitle)
                     .content(message)
-                    .negativeText(R.string.ok)
-                    .show();
+                    .cancelable(false)
+                    .negativeText(R.string.ok);
+            if (status.equals(getString(R.string.auto_login_failed_msg))) {
+                builder.title(R.string.auto_login_failed)
+                        .onNegative((dialog, which) -> onLoginWithPasswordBtn(null));
+            }
+            builder.show();
         }
     }
 }

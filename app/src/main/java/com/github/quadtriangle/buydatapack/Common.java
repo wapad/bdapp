@@ -70,14 +70,13 @@ public class Common {
 
     public static MaterialDialog showIndeterminateProgressDialog(Context ctx,
                                                                  int title, int content) {
-        MaterialDialog dialog = new MaterialDialog.Builder(ctx)
+        return new MaterialDialog.Builder(ctx)
                 .title(title)
                 .content(content)
                 .cancelable(false)
                 .progress(true, 0)
                 .progressIndeterminateStyle(true)
                 .show();
-        return dialog;
     }
 
 
