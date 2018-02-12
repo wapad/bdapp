@@ -79,9 +79,10 @@ public class BuyPackageActivity extends AppCompatActivity {
     }
 
     private class SelectPackTask extends AsyncTask<Void, Void, Boolean> {
-        int buyTimes;
-        String status;
-        List<String> items;
+        private int buyTimes;
+        private String status;
+        private List<String> items;
+        private MaterialDialog selectPackDialog;
 
         @Override
         protected Boolean doInBackground(Void... params) {
@@ -124,7 +125,7 @@ public class BuyPackageActivity extends AppCompatActivity {
         }
 
         private void selectPack() {
-            MaterialDialog slectPackDialog = new MaterialDialog.Builder(context)
+            selectPackDialog = new MaterialDialog.Builder(context)
                     .title(R.string.select_pack)
                     .items(items)
                     .cancelable(false)
@@ -133,16 +134,15 @@ public class BuyPackageActivity extends AppCompatActivity {
                         Toast.makeText(context, text.toString(), Toast.LENGTH_SHORT).show();
                         return true;
                     })
+                    .positiveText(R.string.ok)
+                    .onPositive((dialog, which) -> {
+                        packIndex = selectPackDialog.getSelectedIndex();
+                        robiSheba.dataPlan = items.get(packIndex).split("\\s-\\s")[0];
+                        get_buy_times();
+                    })
                     .negativeText(R.string.cancel)
                     .onNegative((dialog, which) -> finish())
                     .show();
-            slectPackDialog.setActionButton(DialogAction.POSITIVE, R.string.ok);
-            slectPackDialog.getActionButton(DialogAction.POSITIVE).setOnClickListener((I) -> {
-                packIndex = slectPackDialog.getSelectedIndex();
-                robiSheba.dataPlan = items.get(packIndex).split("\\s-\\s")[0];
-                slectPackDialog.dismiss();
-                get_buy_times();
-            });
         }
 
         private void get_buy_times() {
