@@ -1,9 +1,11 @@
 package com.github.quadtriangle.buydatapack;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.json.JSONException;
@@ -48,6 +51,31 @@ public class LoginActivity extends AppCompatActivity {
         Common.setupToolbar(this, true);
         setupView();
         setupCustomTabs();
+        showChangeLocaleOnFirstStart();
+    }
+
+    private void showChangeLocaleOnFirstStart() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor prefsEdit = prefs.edit();
+        if (prefs.getBoolean("isFirstStart", true)) {
+            new MaterialDialog.Builder(context)
+                    .title("Language")
+                    .content(R.string.change_lang_msg)
+                    .cancelable(false)
+                    .positiveText("English")
+                    .negativeText("বাংলা")
+                    .onAny((dialog, which) -> {
+                        if (which.equals(DialogAction.POSITIVE)) {
+                            prefsEdit.putString("language", "en");
+                        } else {
+                            prefsEdit.putString("language", "bn");
+                        }
+                        prefsEdit.putBoolean("isFirstStart", false);
+                        prefsEdit.apply();
+                        // recreate();
+                    })
+                    .show();
+        }
     }
 
     @Override
