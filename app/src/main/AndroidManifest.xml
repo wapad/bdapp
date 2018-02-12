@@ -23,6 +23,7 @@
 
         <activity
             android:name=".LoginActivity"
+            android:noHistory="true"
             android:parentActivityName=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|keyboard">
             <!-- Parent activity meta-data to support api 15 -->
@@ -48,7 +49,7 @@
             <!-- Parent activity meta-data to support api 15 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LoginActivity" />
+                android:value=".MainActivity" />
         </activity>
     </application>
 
