@@ -63,6 +63,19 @@
     <string name="aboutLibraries_description_special3_name" translatable="false">Changelog</string>
     <string name="aboutLibraries_description_special3_text" translatable="false">
         <![CDATA[
+        <b>Version 2.0.1</b>
+        <br/>
+        - fix login issues
+        <br/>
+        - fix usage history
+        <br/>
+        - handle some errors
+        <br/>
+        - change locale dialog on first start
+        <br/>
+        - added sms permission rationale
+        <br/>
+        <br/>
         <b>Version 2.0.0</b>
         <br/>
         - added persisted login with local logout
